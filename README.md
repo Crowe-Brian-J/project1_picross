@@ -27,6 +27,8 @@ I played this game when I was younger on a Gameboy. It's simple enough. You get 
 - Plenty of other apps across the last 15 years that I've used
 - [Wikipedia](https://en.wikipedia.org/wiki/Nonogram) (Who said I couldn't cite Wikipedia?)
 
+- [Font](https://fontlibrary.org/en/font/cave-story) Designer: enigmasmp1824
+
 ---
 
 ### **_Grid_**

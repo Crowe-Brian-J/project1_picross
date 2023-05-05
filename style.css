@@ -1,0 +1,68 @@
+body {
+  font-family: 'CaveStoryRegular';
+  font-weight: normal;
+  font-style: normal;
+  background-color: #9bbc0f;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  color: #0f380f;
+}
+
+header {
+  font-size: 20vmin;
+}
+
+#topmarkers {
+  display: grid;
+  grid-template-columns: repeat(5, 10vmin);
+  gap: 0.2vmin;
+  margin-top: 1.5vmin;
+}
+
+#topmarkers > div {
+  display: grid;
+  grid-template-rows: repeat(3, 4vmin);
+  font-size: 5vmin;
+  justify-content: center;
+  align-items: center;
+  height: 12vmin;
+  border: 1vmin solid #0f380f;
+  color: #9bbc0f;
+  background-color: #0f380f;
+  transform: scale(0.7)
+}
+
+#board {
+  display: grid;
+  grid-template-columns: repeat(5, 10vmin);
+  grid-template-rows: repeat(5, 10vmin);
+  gap: 0vmin;
+  border: 1vmin solid #8bac0f
+}
+
+.cell {
+  border: 1vmin solid #8bac0f
+}
+
+.cell:hover {
+  background-color: rgba(15, 56, 15, 0.3);
+}
+
+button {
+  font-family: 'CaveStoryRegular';
+  font-size: 5vmin;
+  margin-top: 3vmin;
+  color:#0f380f;
+  background-color: #9bbc0f;
+  border: 5px outset #306230;
+  border-radius: 5px;
+}
+
+button:hover {
+  color: #9bbc0f;
+  background-color: #0f380f;
+  transition: all 500ms ease-in;
+}

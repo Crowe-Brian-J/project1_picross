@@ -1,4 +1,4 @@
-//Use Flex Box
+//Use Grid
 
 /*---- constants ----*/
 
