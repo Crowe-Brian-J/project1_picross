@@ -52,12 +52,19 @@ const render = () => {
   renderControls()
 }
 
+const getWinner = () => {}
+
 /* ----- This broke hover. Check later ----- */
 handlePlacement = (evt) => {
   if (winner) return
   const cellIdx = cells.indexOf(evt.target)
   //Guards
-  if (board[cellIdx] !== 0) return //Need to change this because if they === 1, board[cellIdx = 0]
+  if (board[cellIdx] === 1) {
+    board[cellIdx] = 0
+    render()
+    return
+  } //Need to change this because if they === 1, board[cellIdx = 0]
+  board[cellIdx] = 1
   winner = getWinner(cellIdx)
   render()
 }
