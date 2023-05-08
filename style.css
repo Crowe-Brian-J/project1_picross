@@ -32,9 +32,11 @@ header {
   display: flex;
   flex-direction: row;
   font-size: 4.5vmin;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
+  /* add margin between divs? spacing between numbers incorrect */
   height: 6vmin;
+  /* Need to fix width problem. When 9vmin, artifacts on right side. */
   width: 8vmin;
   border: 1vmin solid #0f380f;
   color: #8bac0f;
