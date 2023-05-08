@@ -87,30 +87,42 @@ const renderBoard = () => {
     cellEl.style.backgroundColor = MARKS[arr]
   })
 
+  //replicate for leftClue
   PUZZLES[puzzle].topClue.forEach((clue, idx) => {
-    const clueId = `col${idx + 1}`
+    const clueId = `col${idx}`
     const clueEl = document.getElementById(clueId)
     let longClue = ''
     if (clue.length > 1) {
-      console.log('Longer Clue')
       clue.forEach((cl, idx2) => {
-        console.log(idx2)
-        console.log(cl)
-        console.log('Long Clue: ' + longClue)
         longClue += `<div>${cl}</div>`
-        console.log('Long Clue: ' + longClue)
       })
     } else {
       longClue = `<div>${clue}</div>`
     }
-    console.log('Long Clue after if/else ' + longClue)
+    clueEl.innerHTML = longClue
+  })
+
+  PUZZLES[puzzle].leftClue.forEach((clue, idx) => {
+    const clueId = `row${idx}`
+    const clueEl = document.getElementById(clueId)
+    let longClue = ''
+    console.log(clue.length)
+    if (clue.length > 1) {
+      clue.forEach((cl, idx2) => {
+        longClue += `<div>${cl}</div> `
+      })
+    } else {
+      console.log('I am only one clue.')
+      longClue = `<div>${clue}</div>`
+    }
+    console.log(longClue)
     clueEl.innerHTML = longClue
   })
 }
 
 const renderMessage = () => {
   if (winner) {
-    messageEl.innerHTML = `You won! It's a ${PUZZLES[puzzle].name}!` //left in backticks for template literal. Need to announce what the picture is
+    messageEl.innerHTML = `You won! It's a ${PUZZLES[puzzle].name}!`
   } else if (check) {
     messageEl.innerHTML = "Nope, that's not it, try again"
   } else {

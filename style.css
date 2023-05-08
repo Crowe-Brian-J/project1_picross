@@ -15,6 +15,33 @@ header {
   font-size: 20vmin;
 }
 
+
+#gameboard {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+}
+
+#leftmarkers {
+  display: grid;
+  grid-template-rows: repeat(5, 10vmin);
+  gap: 0.2vmin;
+  margin-top: 16.75vmin;
+}
+
+#leftmarkers > div  {
+  display: flex;
+  flex-direction: row;
+  font-size: 4.5vmin;
+  justify-content: center;
+  align-items: center;
+  height: 6vmin;
+  width: 8vmin;
+  border: 1vmin solid #0f380f;
+  color: #8bac0f;
+  background-color: #306230;
+  transform: scale(0.8);
+}
+
 #topmarkers {
   display: grid;
   grid-template-columns: repeat(5, 10vmin);
@@ -30,7 +57,7 @@ header {
   align-items: center;
   height: 12vmin;
   border: 1vmin solid #0f380f;
-  color: #9bbc0f;
+  color: #8bac0f;
   background-color: #306230;
   transform: scale(0.7)
 }
