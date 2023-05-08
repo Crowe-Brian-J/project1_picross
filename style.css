@@ -7,7 +7,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   color: #0f380f;
 }
 
@@ -72,6 +71,11 @@ header {
 }
 
 .cell {
+  cursor: crosshair;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  font-size: 9vmin;
   border: 1vmin solid #8bac0f
 }
 

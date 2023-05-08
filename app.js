@@ -2,7 +2,7 @@
 const MARKS = {
   0: '#9bbc0f', //blank
   1: '#0f380f', //marked
-  '-1': '#ffffff' //marked empty
+  '-1': '#306230' //marked empty
 }
 //solutions and clues for puzzles
 const PUZZLES = [
@@ -51,14 +51,18 @@ const PUZZLES = [
       [1, 2]
     ],
     leftClue: [5, [1, 1], 1, [1, 1], 5]
-  }
+  },
+  { name: 'question mark', solution: [], topClue: [], leftClue: [] }
 ]
 
 /* ----- state variables ----- */
 let board
 let winner
 let check = 0
-let puzzle = 0 // Iterator for which puzzle user is playing.
+
+//Change puzzle back to 0
+
+let puzzle = 4 // Iterator for which puzzle user is playing.
 let clicker = 1 //set to 1 initially, -1 if marking blank
 
 /* ----- cached elements ----- */
@@ -68,6 +72,7 @@ const checkBtn = document.querySelector('#check')
 const newPuzzBtn = document.querySelector('#newPuzzle')
 const filledBtn = document.querySelector('#toggleFilled')
 const blankBtn = document.querySelector('#toggleBlank')
+const boardAdd = document.querySelector('#board')
 const cells = [...document.querySelectorAll('#board > div')]
 
 /* ----- functions ----- */
@@ -75,7 +80,6 @@ const init = () => {
   board = [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
   ]
-  topMarkers = [[], [], [], [], []]
   winner = null
   render()
 }
@@ -85,9 +89,12 @@ const renderBoard = () => {
     const cellId = `cell${cell}`
     const cellEl = document.getElementById(cellId)
     cellEl.style.backgroundColor = MARKS[arr]
-    if (cellEl.style.backgroundColor === -1) {
-      console.log('I am here.')
+    if (MARKS[arr] === '#306230') {
       cellEl.innerText = 'X'
+    }
+    if (MARKS[arr] !== '#306230') {
+      //clears X
+      cellEl.innerText = ''
     }
   })
 
@@ -162,10 +169,13 @@ const checkPuzzle = () => {
 }
 
 const nextPuzzle = () => {
-  //add logic for puzzle = 5 that congratulates the winner and ends the game
+  //add logic for puzzle = 5 that congratulates the winner and ends the game/populates new board
   puzzle++
   if (puzzle > 4) {
     puzzle = 0
+    console.log(cells)
+    //Append new cells w/ cell#
+    //Organize new cells in style.css
   }
   board = [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -185,12 +195,6 @@ handlePlacement = (evt) => {
     return
   }
   board[cellIdx] = clicker
-  if (clicker === -1) {
-    //insert X into cell to acknowledge as blank better
-    console.log(board[cellIdx])
-    board[cellIdx].innerText = 'X'
-    board[cellIdx].innerHTML = 'X'
-  }
   render()
 }
 

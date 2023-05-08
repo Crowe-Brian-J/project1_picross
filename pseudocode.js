@@ -42,3 +42,23 @@
 //resetBtn.addEventListener('click', resetGame)
 
 /*---- Add blank button toggle functionality ----*/
+// Done
+
+/*---- Add instructions ----*/
+
+/*---- Change New Puzzle On idx 5 ----*/
+/*
+[/]Add new puzzle to PUZZLES
+[ ]Transform board to 8x8 -> visual board to 8x8 -> look at  stylistic changes
+[ ]
+
+for (let i = 5; i < 64; i++){
+  board.push([])
+}
+
+board = 
+
+*/
+
+/*---- PiCOLOR ----*/
+//32x32 -> Color Palette
