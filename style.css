@@ -34,14 +34,13 @@ header {
   font-size: 4.5vmin;
   justify-content: space-evenly;
   align-items: center;
-  /* add margin between divs? spacing between numbers incorrect */
   height: 6vmin;
   /* Need to fix width problem. When 9vmin, artifacts on right side. */
   width: 8vmin;
   border: 1vmin solid #0f380f;
   color: #8bac0f;
   background-color: #306230;
-  transform: scale(0.8);
+  transform: scale(0.9);
 }
 
 #topmarkers {
@@ -94,4 +93,21 @@ button:hover {
 
 #newPuzzle {
   visibility: hidden;
+}
+
+#toggleFilled, #toggleBlank {
+  position: relative;
+  display: inline-block;
+  width: 16vmin;
+  height: 10vmin;
+}
+
+#toggleFilled {
+  color: #9bbc0f;
+  background-color: #0f380f;
+}
+
+#toggleBlank {
+  color: #0f380f;
+  background-color: #9bbc0f;
 }

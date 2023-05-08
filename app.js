@@ -2,7 +2,7 @@
 const MARKS = {
   0: '#9bbc0f', //blank
   1: '#0f380f', //marked
-  '-1': 'O' //marked empty (possibly remove?)
+  '-1': '#ffffff' //marked empty
 }
 //solutions and clues for puzzles
 const PUZZLES = [
@@ -59,16 +59,16 @@ let board
 let winner
 let check = 0
 let puzzle = 0 // Iterator for which puzzle user is playing.
-let topMarkers
+let clicker = 1 //set to 1 initially, -1 if marking blank
 
 /* ----- cached elements ----- */
 const messageEl = document.querySelector('h1')
-//const drawEl = document.querySelector('not sure what's going here yet')
 const resetBtn = document.querySelector('#reset')
 const checkBtn = document.querySelector('#check')
 const newPuzzBtn = document.querySelector('#newPuzzle')
+const filledBtn = document.querySelector('#toggleFilled')
+const blankBtn = document.querySelector('#toggleBlank')
 const cells = [...document.querySelectorAll('#board > div')]
-//const markerEl = document.querySelector('topmarker')
 
 /* ----- functions ----- */
 const init = () => {
@@ -85,38 +85,34 @@ const renderBoard = () => {
     const cellId = `cell${cell}`
     const cellEl = document.getElementById(cellId)
     cellEl.style.backgroundColor = MARKS[arr]
+    if (cellEl.style.backgroundColor === -1) {
+      console.log('I am here.')
+      cellEl.innerText = 'X'
+    }
   })
 
-  //replicate for leftClue
-  PUZZLES[puzzle].topClue.forEach((clue, idx) => {
-    const clueId = `col${idx}`
-    const clueEl = document.getElementById(clueId)
+  //DRYer Code - Defining repeatable code for each set of clues
+  const clueDiv = (clue, id) => {
+    const clueEl = document.getElementById(id)
     let longClue = ''
     if (clue.length > 1) {
       clue.forEach((cl, idx2) => {
         longClue += `<div>${cl}</div>`
       })
     } else {
-      longClue = `<div>${clue}</div>`
+      longClue = `<div>${clue}</div`
     }
     clueEl.innerHTML = longClue
+  }
+
+  PUZZLES[puzzle].topClue.forEach((clue, idx) => {
+    const clueId = `col${idx}`
+    clueDiv(clue, clueId)
   })
 
   PUZZLES[puzzle].leftClue.forEach((clue, idx) => {
     const clueId = `row${idx}`
-    const clueEl = document.getElementById(clueId)
-    let longClue = ''
-    console.log(clue.length)
-    if (clue.length > 1) {
-      clue.forEach((cl, idx2) => {
-        longClue += `<div>${cl}</div> `
-      })
-    } else {
-      console.log('I am only one clue.')
-      longClue = `<div>${clue}</div>`
-    }
-    console.log(longClue)
-    clueEl.innerHTML = longClue
+    clueDiv(clue, clueId)
   })
 }
 
@@ -143,8 +139,15 @@ const render = () => {
 
 const checkPuzzle = () => {
   let checkTotal = 0
+  let checkBoard = board
+  for (let i = 0; i < checkBoard.length; i++) {
+    //remove -1s from checkBoard without removing from actual board
+    if (checkBoard[i] === -1) {
+      checkBoard[i] === 0
+    }
+  }
   for (let i = 0; i < board.length; i++) {
-    if (board[i] === PUZZLES[puzzle].solution[i]) {
+    if (board[i] === checkBoard[i]) {
       checkTotal++
     }
   }
@@ -164,7 +167,6 @@ const nextPuzzle = () => {
   if (puzzle > 4) {
     puzzle = 0
   }
-  //possibly invoke resetgame
   board = [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
   ]
@@ -177,12 +179,18 @@ handlePlacement = (evt) => {
   if (winner) return
   const cellIdx = cells.indexOf(evt.target)
   //Guards
-  if (board[cellIdx] === 1) {
+  if (board[cellIdx] === 1 || board[cellIdx] === -1) {
     board[cellIdx] = 0
     render()
     return
   }
-  board[cellIdx] = 1
+  board[cellIdx] = clicker
+  if (clicker === -1) {
+    //insert X into cell to acknowledge as blank better
+    console.log(board[cellIdx])
+    board[cellIdx].innerText = 'X'
+    board[cellIdx].innerHTML = 'X'
+  }
   render()
 }
 
@@ -193,10 +201,28 @@ resetGame = () => {
   render()
 }
 
+const markBlank = () => {
+  clicker = -1
+  filledBtn.style.color = '#0f380f'
+  filledBtn.style.backgroundColor = '#9bbc0f'
+  blankBtn.style.color = '#9bbc0f'
+  blankBtn.style.backgroundColor = '#0f380f'
+}
+
+const markFilled = () => {
+  clicker = 1
+  filledBtn.style.color = '#9bbc0f'
+  filledBtn.style.backgroundColor = '#0f380f'
+  blankBtn.style.color = '#0f380f'
+  blankBtn.style.backgroundColor = '#9bbc0f'
+}
+
 init()
 
 /* ----- event listeners ----- */
 document.getElementById('board').addEventListener('click', handlePlacement)
 resetBtn.addEventListener('click', resetGame) //See if I need to change reset button as I implement more puzzles
 checkBtn.addEventListener('click', checkPuzzle)
+filledBtn.addEventListener('click', markFilled)
+blankBtn.addEventListener('click', markBlank)
 newPuzzBtn.addEventListener('click', nextPuzzle)

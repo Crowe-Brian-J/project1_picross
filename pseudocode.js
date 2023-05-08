@@ -6,10 +6,10 @@
 
 /*---- state variables ----*/
 
-let board
-let winner
+//let board
+//let winner
 //stretch
-let winTimer
+//let winTimer
 
 /*---- cached elements ----*/
 
@@ -40,3 +40,5 @@ let winTimer
 /*---- event listeners ----*/
 //document.getElementById('board').addEventListener('click', handlePlacement)
 //resetBtn.addEventListener('click', resetGame)
+
+/*---- Add blank button toggle functionality ----*/
