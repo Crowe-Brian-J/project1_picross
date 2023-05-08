@@ -173,7 +173,6 @@ const nextPuzzle = () => {
   puzzle++
   if (puzzle > 4) {
     puzzle = 0
-    console.log(cells)
     //Append new cells w/ cell#
     //Organize new cells in style.css
   }

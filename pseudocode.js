@@ -44,6 +44,9 @@
 /*---- Add blank button toggle functionality ----*/
 // Done
 
+/*---- Add Music ----*/
+//Add Credits for Music
+
 /*---- Add instructions ----*/
 
 /*---- Change New Puzzle On idx 5 ----*/
