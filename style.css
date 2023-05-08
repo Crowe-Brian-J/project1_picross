@@ -23,15 +23,15 @@ header {
 }
 
 #topmarkers > div {
-  display: grid;
-  grid-template-rows: repeat(3, 4vmin);
+  display: flex;
+  flex-direction: column;
   font-size: 5vmin;
   justify-content: center;
   align-items: center;
   height: 12vmin;
   border: 1vmin solid #0f380f;
   color: #9bbc0f;
-  background-color: #0f380f;
+  background-color: #306230;
   transform: scale(0.7)
 }
 
@@ -45,10 +45,6 @@ header {
 
 .cell {
   border: 1vmin solid #8bac0f
-}
-
-.cell:hover {
-  background-color: rgba(15, 56, 15, 0.3);
 }
 
 button {
@@ -65,4 +61,8 @@ button:hover {
   color: #9bbc0f;
   background-color: #0f380f;
   transition: all 500ms ease-in;
+}
+
+#newPuzzle {
+  visibility: hidden;
 }
