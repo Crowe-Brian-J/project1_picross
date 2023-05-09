@@ -298,19 +298,15 @@ const generatePuzzle = () => {
   return puzzObj
 }
 
-//new "feature" introduced 9 May 2023 @1:54pm check solution now clears board of marked blank. After the check of checkBoard[i] === -1, it also changes board[i]
 const checkPuzzle = () => {
   let checkTotal = 0
-  let checkBoard = board
+  let checkBoard = [...board] //cloning the array so that when I change the -1 value it doesn't mutate the board
+
   for (let i = 0; i < checkBoard.length; i++) {
     if (checkBoard[i] === -1) {
-      //This is meant to help the board check starting on line 314 by removing the -1s from checkBoard, but now it's removing them from board as well.
       checkBoard[i] = 0
-      console.log('This is board: ' + board)
-      console.log('This is checkBoard: ' + checkBoard)
     }
   }
-  console.log('This is the solution: ' + PUZZLES[puzzle].solution)
   for (let i = 0; i < checkBoard.length; i++) {
     if (PUZZLES[puzzle].solution[i] === checkBoard[i]) {
       checkTotal++
