@@ -144,6 +144,7 @@ const render = () => {
   renderControls()
 }
 
+//LOGIC JUST GOT SCREWED UP FIX IN THE MORNING
 const checkPuzzle = () => {
   let checkTotal = 0
   let checkBoard = board
@@ -154,7 +155,7 @@ const checkPuzzle = () => {
     }
   }
   for (let i = 0; i < board.length; i++) {
-    if (board[i] === checkBoard[i]) {
+    if (PUZZLES[puzzle].solution[i] === checkBoard[i]) {
       checkTotal++
     }
   }

@@ -1,3 +1,5 @@
+/* Media Query */
+
 body {
   font-family: 'CaveStoryRegular';
   font-weight: normal;
@@ -78,7 +80,16 @@ header {
   border: 1vmin solid #8bac0f
 }
 
-button {
+#instruction {
+  font-family: 'CaveStoryRegular';
+  font-size: 3vmin;
+  color: #306230;
+  background-color: #8bac0f;
+  border: 2x outset #306230;
+  border-radius: 5px; 
+}
+
+#check, #reset, #toggleFilled, #toggleBlank, #newPuzzle{
   font-family: 'CaveStoryRegular';
   font-size: 5vmin;
   margin-top: 3vmin;
