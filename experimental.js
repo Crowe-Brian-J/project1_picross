@@ -9,7 +9,6 @@ const generateBoard = () => {
   return abstractBoard
 }
 
-//PUZZLES[puzzle].name
 const leftClueGen = (abBoard) => {
   const compArray = []
   let simpArray = []
@@ -159,3 +158,19 @@ const generatePuzzle = () => {
 }
 
 console.log(generatePuzzle()) //Just so you can see before I try to plug it into my code
+//Would be called PUZZLES.push(generatePuzzle()) in nextPuzzle() inside of (puzzle >= 4) block
+
+//example puzzle from PUZZLES array:
+/*
+ {
+    name: 'a heart',
+    solution: [
+      1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0
+    ],
+    topClue: [3, 4, 4, 4, 3],
+    leftClue: [[2, 2], 5, 5, 3, 1]
+  },
+*/
+
+//Error checking doesn't like blanks
+//leftClueGen not working correctly

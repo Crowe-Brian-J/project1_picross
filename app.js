@@ -61,7 +61,7 @@ let check = 0
 
 //Change puzzle back to 0
 
-let puzzle = 0 // Iterator for which puzzle user is playing.
+let puzzle = 4 // Iterator for which puzzle user is playing.
 let clicker = 1 //set to 1 initially, -1 if marking blank
 
 /* ----- cached elements ----- */
@@ -143,20 +143,181 @@ const render = () => {
   renderControls()
 }
 
+const generateBoard = () => {
+  let abstractBoard = [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  ]
+
+  for (let i = 0; i < abstractBoard.length; i++) {
+    abstractBoard[i] = Math.floor(Math.random() * 2)
+  }
+  return abstractBoard
+}
+
+const topClueGen = (abBoard) => {
+  const compArray = []
+  let simpArray0 = []
+  let simpArray1 = []
+  let simpArray2 = []
+  let simpArray3 = []
+  let simpArray4 = []
+
+  let simpNum0 = 0
+  let simpNum1 = 0
+  let simpNum2 = 0
+  let simpNum3 = 0
+  let simpNum4 = 0
+
+  for (let i = 0; i < abBoard.length; i++) {
+    switch (i) {
+      case 0:
+      case 5:
+      case 10:
+      case 15:
+      case 20:
+        //only above i cases apply to topClue[0] in abstract board --> Also applies to boards below
+        if (abBoard[i] === 1) simpNum0++
+        if (abBoard[i] === 0) {
+          if (simpNum0 > 0) simpArray0.push(simpNum0)
+          simpNum0 = 0 //revert to 0 to construct next clue
+        }
+        if (i === 20) {
+          if (simpArray0.length === 0 || simpNum0 > 0) simpArray0.push(simpNum0)
+        }
+        break
+      case 1:
+      case 6:
+      case 11:
+      case 16:
+      case 21:
+        if (abBoard[i] === 1) simpNum1++
+        if (abBoard[i] === 0) {
+          if (simpNum1 > 0) simpArray1.push(simpNum1)
+          simpNum1 = 0
+        }
+        if (i === 21) {
+          if (simpArray1.length === 0 || simpNum1 > 0) simpArray1.push(simpNum1)
+        }
+        break
+      case 2:
+      case 7:
+      case 12:
+      case 17:
+      case 22:
+        if (abBoard[i] === 1) simpNum2++
+        if (abBoard[i] === 0) {
+          if (simpNum2 > 0) simpArray2.push(simpNum2)
+          simpNum2 = 0
+        }
+        if (i === 22) {
+          if (simpArray2.length === 0 || simpNum2 > 0) simpArray2.push(simpNum2)
+        }
+        break
+      case 3:
+      case 8:
+      case 13:
+      case 18:
+      case 23:
+        if (abBoard[i] === 1) simpNum3++
+        if (abBoard[i] === 0) {
+          if (simpNum3 > 0) simpArray3.push(simpNum3)
+          simpNum3 = 0
+        }
+        if (i === 23) {
+          if (simpArray3.length === 0 || simpNum3 > 0) simpArray3.push(simpNum3)
+        }
+        break
+      case 4:
+      case 9:
+      case 14:
+      case 19:
+      case 24:
+        if (abBoard[i] === 1) simpNum4++
+        if (abBoard[i] === 0) {
+          if (simpNum4 > 0) simpArray4.push(simpNum4)
+          simpNum4 = 0
+        }
+        if (i === 24) {
+          if (simpArray4.length === 0 || simpNum4 > 0) simpArray4.push(simpNum4)
+        }
+        break
+      default:
+        console.log('There should not be anything that fits here.')
+        break
+    }
+  }
+  compArray.push(simpArray0)
+  compArray.push(simpArray1)
+  compArray.push(simpArray2)
+  compArray.push(simpArray3)
+  compArray.push(simpArray4)
+
+  return compArray
+}
+
+//leftClueGen working incorrectly
+const leftClueGen = (abBoard) => {
+  console.log(abBoard)
+  const compArray = []
+  let simpArray = []
+  let simpNum = 0
+  for (let i = 0; i < abBoard.length; i++) {
+    if (abBoard[i] === 1) {
+      simpNum++
+      console.log(simpNum)
+    }
+    if (abBoard[i] === 0) {
+      if (simpNum > 0) {
+        simpArray.push(simpNum)
+      }
+      simpNum = 0
+    }
+    if (i === 4 || i === 9 || i === 14 || i === 19 || i === 24) {
+      if (simpArray.length === 0 || simpNum > 0) {
+        simpArray.push(simpNum)
+      }
+      compArray.push(simpArray)
+      simpArray = []
+      simpNum = 0
+    }
+  }
+  return compArray
+}
+
+const generatePuzzle = () => {
+  const namePuzz = 'abstract'
+  let abBoard = generateBoard()
+  let tClue = topClueGen(abBoard)
+  let lClue = leftClueGen(abBoard)
+
+  console.log(namePuzz)
+  console.log(abBoard)
+  console.log(tClue)
+  console.log(lClue)
+  let puzzObj = {
+    name: namePuzz,
+    solution: abBoard,
+    topClue: tClue,
+    leftClue: lClue
+  }
+
+  return puzzObj
+}
+
 const checkPuzzle = () => {
   let checkTotal = 0
   let checkBoard = board
   for (let i = 0; i < checkBoard.length; i++) {
-    //remove -1s from checkBoard without removing from actual board
     if (checkBoard[i] === -1) {
-      checkBoard[i] === 0
+      checkBoard[i] = 0
     }
   }
-  for (let i = 0; i < board.length; i++) {
+  for (let i = 0; i < checkBoard.length; i++) {
     if (PUZZLES[puzzle].solution[i] === checkBoard[i]) {
       checkTotal++
     }
   }
+  console.log(checkTotal)
   if (checkTotal === 25) {
     winner = 1
     check = 0
@@ -169,12 +330,15 @@ const checkPuzzle = () => {
 
 const nextPuzzle = () => {
   //add logic for puzzle = 5 that congratulates the winner and ends the game/populates new board
-  puzzle++
-  if (puzzle > 4) {
-    puzzle = 0
-    //Append new cells w/ cell#
+  if (puzzle >= 4) {
+    // Generate new puzzles ahead of time
+    //puzzle = 0
+    //Append new puzzles
     //Organize new cells in style.css
+
+    PUZZLES.push(generatePuzzle())
   }
+  puzzle++
   board = [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
   ]
