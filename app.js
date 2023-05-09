@@ -61,7 +61,7 @@ let check = 0
 
 //Change puzzle back to 0
 
-let puzzle = 4 // Iterator for which puzzle user is playing.
+let puzzle = 0 // Iterator for which puzzle user is playing.
 let clicker = 1 //set to 1 initially, -1 if marking blank
 
 /* ----- cached elements ----- */
@@ -257,14 +257,12 @@ const topClueGen = (abBoard) => {
 
 //leftClueGen working incorrectly
 const leftClueGen = (abBoard) => {
-  console.log(abBoard)
   const compArray = []
   let simpArray = []
   let simpNum = 0
   for (let i = 0; i < abBoard.length; i++) {
     if (abBoard[i] === 1) {
       simpNum++
-      console.log(simpNum)
     }
     if (abBoard[i] === 0) {
       if (simpNum > 0) {
@@ -290,10 +288,6 @@ const generatePuzzle = () => {
   let tClue = topClueGen(abBoard)
   let lClue = leftClueGen(abBoard)
 
-  console.log(namePuzz)
-  console.log(abBoard)
-  console.log(tClue)
-  console.log(lClue)
   let puzzObj = {
     name: namePuzz,
     solution: abBoard,
@@ -304,20 +298,24 @@ const generatePuzzle = () => {
   return puzzObj
 }
 
+//new "feature" introduced 9 May 2023 @1:54pm check solution now clears board of marked blank. After the check of checkBoard[i] === -1, it also changes board[i]
 const checkPuzzle = () => {
   let checkTotal = 0
   let checkBoard = board
   for (let i = 0; i < checkBoard.length; i++) {
     if (checkBoard[i] === -1) {
+      //This is meant to help the board check starting on line 314 by removing the -1s from checkBoard, but now it's removing them from board as well.
       checkBoard[i] = 0
+      console.log('This is board: ' + board)
+      console.log('This is checkBoard: ' + checkBoard)
     }
   }
+  console.log('This is the solution: ' + PUZZLES[puzzle].solution)
   for (let i = 0; i < checkBoard.length; i++) {
     if (PUZZLES[puzzle].solution[i] === checkBoard[i]) {
       checkTotal++
     }
   }
-  console.log(checkTotal)
   if (checkTotal === 25) {
     winner = 1
     check = 0
