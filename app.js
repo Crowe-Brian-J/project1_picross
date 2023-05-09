@@ -7,7 +7,7 @@ const MARKS = {
 //solutions and clues for puzzles
 const PUZZLES = [
   {
-    name: 'heart',
+    name: 'a heart',
     solution: [
       1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0
     ],
@@ -15,7 +15,7 @@ const PUZZLES = [
     leftClue: [[2, 2], 5, 5, 3, 1]
   },
   {
-    name: 'skull',
+    name: 'a skull',
     solution: [
       0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0
     ],
@@ -23,7 +23,7 @@ const PUZZLES = [
     leftClue: [3, 5, [1, 1, 1], 3, [1, 1]]
   },
   {
-    name: 'boat',
+    name: 'a boat',
     solution: [
       0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0
     ],
@@ -31,7 +31,7 @@ const PUZZLES = [
     leftClue: [2, 3, 1, 5, 3]
   },
   {
-    name: 'letter a',
+    name: 'a capital a',
     solution: [
       0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1
     ],
@@ -39,7 +39,7 @@ const PUZZLES = [
     leftClue: [1, [1, 1], [1, 1], 5, [1, 1]]
   },
   {
-    name: 'letter z',
+    name: 'a capital z',
     solution: [
       1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1
     ],
@@ -51,8 +51,7 @@ const PUZZLES = [
       [1, 2]
     ],
     leftClue: [5, [1, 1], 1, [1, 1], 5]
-  },
-  { name: 'question mark', solution: [], topClue: [], leftClue: [] }
+  }
 ]
 
 /* ----- state variables ----- */
@@ -62,7 +61,7 @@ let check = 0
 
 //Change puzzle back to 0
 
-let puzzle = 4 // Iterator for which puzzle user is playing.
+let puzzle = 0 // Iterator for which puzzle user is playing.
 let clicker = 1 //set to 1 initially, -1 if marking blank
 
 /* ----- cached elements ----- */
@@ -125,7 +124,7 @@ const renderBoard = () => {
 
 const renderMessage = () => {
   if (winner) {
-    messageEl.innerHTML = `You won! It's a ${PUZZLES[puzzle].name}!`
+    messageEl.innerHTML = `You won! It's ${PUZZLES[puzzle].name}!`
   } else if (check) {
     messageEl.innerHTML = "Nope, that's not it, try again"
   } else {
@@ -144,7 +143,6 @@ const render = () => {
   renderControls()
 }
 
-//LOGIC JUST GOT SCREWED UP FIX IN THE MORNING
 const checkPuzzle = () => {
   let checkTotal = 0
   let checkBoard = board
