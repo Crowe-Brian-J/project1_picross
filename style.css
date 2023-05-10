@@ -102,13 +102,13 @@ button:hover {
   margin-top: 1px;
 }
 
-/* At 659 - 909 pixels wide, pixels they shift staggered */
+/* At 659 - 825 pixels wide, pixels they shift staggered */
 #toggleFilled, #toggleBlank {
   font-family: 'CaveStoryRegular';
   font-size: 3vmin;
   border: 4px outset #306230;
   border-radius: 6px;
-  width: 16vmin;
+  width: 15vmin;
   height: 6vmin;
 }
 
