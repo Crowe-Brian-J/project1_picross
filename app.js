@@ -72,6 +72,7 @@ const newPuzzBtn = document.querySelector('#newPuzzle')
 const filledBtn = document.querySelector('#toggleFilled')
 const blankBtn = document.querySelector('#toggleBlank')
 const boardAdd = document.querySelector('#board') //don't remember why I added this. doesn't appear anywhere else
+let diceCheck = document.querySelector('h3')
 const cells = [...document.querySelectorAll('#board > div')]
 
 /* ----- functions ----- */
@@ -330,6 +331,14 @@ const checkPuzzle = () => {
 const nextPuzzle = () => {
   if (puzzle >= 4) {
     PUZZLES.push(generatePuzzle())
+  }
+  if (puzzle >= 10) {
+    let diceRoll = Math.floor(Math.random() * 7)
+    if (diceRoll > 5) {
+      diceCheck.style.visibility = 'visible'
+    } else {
+      diceCheck.style.visibility = 'hidden'
+    }
   }
   puzzle++
   board = [
