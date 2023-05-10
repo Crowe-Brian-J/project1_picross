@@ -10,7 +10,7 @@ body {
   justify-content: center;
   align-items: center;
   color: #0f380f;
-  transform: scale(0.9);
+  transform: scale(0.99);
 }
 
 header {
@@ -32,7 +32,7 @@ header {
 #leftmarkers > div  {
   display: flex;
   flex-direction: row;
-  font-size: 4.5vmin;
+  font-size: 4vmin;
   justify-content: space-evenly;
   align-items: center;
   height: 6vmin;
@@ -77,23 +77,14 @@ header {
   display: grid;
   justify-content: center;
   align-items: center;
-  font-size: 9vmin;
+  font-size: 10vmin;
   border: 1vmin solid #8bac0f
 }
 
-#instruction {
+#check, #reset, #newPuzzle{
   font-family: 'CaveStoryRegular';
   font-size: 3vmin;
-  color: #306230;
-  background-color: #8bac0f;
-  border: 2x outset #306230;
-  border-radius: 5px; 
-}
-
-#check, #reset, #toggleFilled, #toggleBlank, #newPuzzle{
-  font-family: 'CaveStoryRegular';
-  font-size: 3vmin;
-  margin-top: 3vmin;
+  margin-top: 1vmin;
   color:#0f380f;
   background-color: #9bbc0f;
   border: 5px outset #306230;
@@ -108,15 +99,17 @@ button:hover {
 
 #newPuzzle {
   visibility: hidden;
+  margin-top: 1px;
 }
 
+/* At 659 - 909 pixels wide, pixels they shift staggered */
 #toggleFilled, #toggleBlank {
-  position: relative;
-  display: inline-block;
+  font-family: 'CaveStoryRegular';
+  font-size: 3vmin;
+  border: 4px outset #306230;
+  border-radius: 6px;
   width: 16vmin;
   height: 6vmin;
-  margin-left: 0.5vmin;
-  margin-right: 0.5vmin;
 }
 
 #toggleFilled {
@@ -127,4 +120,13 @@ button:hover {
 #toggleBlank {
   color: #0f380f;
   background-color: #9bbc0f;
+}
+
+#instruction {
+  font-family: 'CaveStoryRegular';
+  font-size: 3vmin;
+  color: #306230;
+  background-color: #8bac0f;
+  border: 4px outset #306230;
+  border-radius: 5px; 
 }

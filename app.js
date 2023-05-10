@@ -2,7 +2,7 @@
 const MARKS = {
   0: '#9bbc0f', //blank
   1: '#0f380f', //marked
-  '-1': '#306230' //marked empty
+  '-1': 'rgba(48, 98, 48, 0.5)' //marked empty
 }
 //solutions and clues for puzzles
 const PUZZLES = [
@@ -88,10 +88,10 @@ const renderBoard = () => {
     const cellId = `cell${cell}`
     const cellEl = document.getElementById(cellId)
     cellEl.style.backgroundColor = MARKS[arr]
-    if (MARKS[arr] === '#306230') {
+    if (MARKS[arr] === 'rgba(48, 98, 48, 0.5)') {
       cellEl.innerText = 'X'
     }
-    if (MARKS[arr] !== '#306230') {
+    if (MARKS[arr] !== 'rgba(48, 98, 48, 0.5)') {
       //clears X
       cellEl.innerText = ''
     }
@@ -124,10 +124,16 @@ const renderBoard = () => {
 
 const renderMessage = () => {
   if (winner) {
+    messageEl.style.backgroundColor = '#306230'
+    messageEl.style.color = '#9bbc0f'
     messageEl.innerHTML = `You won! It's ${PUZZLES[puzzle].name}!`
   } else if (check) {
+    messageEl.style.backgroundColor = '#9bbc0f'
+    messageEl.style.color = '#0f380f'
     messageEl.innerHTML = "Nope, that's not it, try again"
   } else {
+    messageEl.style.backgroundColor = '#9bbc0f'
+    messageEl.style.color = '#0f380f'
     messageEl.innerHTML = "What's it supposed to be?"
   }
 }
@@ -323,13 +329,7 @@ const checkPuzzle = () => {
 }
 
 const nextPuzzle = () => {
-  //add logic for puzzle = 5 that congratulates the winner and ends the game/populates new board
   if (puzzle >= 4) {
-    // Generate new puzzles ahead of time
-    //puzzle = 0
-    //Append new puzzles
-    //Organize new cells in style.css
-
     PUZZLES.push(generatePuzzle())
   }
   puzzle++
