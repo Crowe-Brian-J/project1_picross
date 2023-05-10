@@ -2,36 +2,37 @@
 
 const COLORS = {
   0: 'white',
-  1: 'brown',
+  1: 'gray',
   2: 'red',
   3: 'orange',
   4: 'yellow',
   5: 'green',
   6: 'blue',
   7: 'purple',
-  8: 'gray',
+  8: 'brown',
   9: 'black',
-  10: 'darkred',
-  11: 'darkorange',
-  12: 'darkyellow',
-  13: 'darkgreen',
-  14: 'darkblue',
-  15: 'darkpurple'
+  10: 'khaki',
+  11: 'yellowgreen',
+  12: 'mediumturquoise',
+  13: 'slateblue',
+  14: 'violet',
+  15: 'pink'
 }
 
 //state variables
 let board = []
-let palette
+let palette = []
 let paintColor
+let brush = 0
 
 for (let i = 0; i < 256; i++) {
   board.push(0)
 }
 
 //cached elements
-const resetBtn = document.querySelector('#reset')
-const paletteColors = [...document.querySelectorAll('#palette > div')]
 const cells = [...document.querySelectorAll('#board > div')]
+const palettes = [...document.querySelectorAll('#palette > div')]
+const resetBtn = document.querySelector('#reset')
 
 //functions
 const init = () => {
@@ -46,6 +47,7 @@ const renderBoard = () => {
   board.forEach((arr, cell) => {
     const cellId = `cell${cell}`
     const cellEl = document.getElementById(cellId)
+    //COLORS[arr] = brush
     cellEl.style.backgroundColor = COLORS[arr]
   })
 }
@@ -54,8 +56,7 @@ const renderPalette = () => {
   palette.forEach((arr, sq) => {
     const sqId = `p${sq}`
     const sqEl = document.getElementById(sqId)
-    sq.style.backgroundColor = COLORS[sqEl]
-    console.log(COLORS[sq])
+    sqEl.style.backgroundColor = COLORS[sq]
   })
 }
 const renderControls = () => {}
@@ -68,17 +69,15 @@ const render = () => {
 /*---- May need to set these to two separate functions, one to suck up paint color, one to paint cell ----*/
 handlePaint = (evt) => {
   const cellIdx = cells.indexOf(evt.target)
-  const paletteIdx = paletteColors.indexOf(evt.target)
-  if (board[cellIdx] === palette[paletteIdx]) {
-    board[(cellIdx = 0)]
-    render()
-    return
-  }
-  board[cellIdx] = palette[paletteIdx]
+  board[cellIdx] = brush
   render()
+}
+
+handleBrush = (evt) => {
+  brush = palettes.indexOf(evt.target)
 }
 
 init()
 //event listeners
 document.getElementById('board').addEventListener('click', handlePaint)
-document.getElementById('palette').addEventListener('click', handlePaint)
+document.getElementById('palette').addEventListener('click', handleBrush)

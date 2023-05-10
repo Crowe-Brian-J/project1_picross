@@ -1,4 +1,5 @@
 /* Media Query */
+/* Need to expand id='#gameboard' on phones/tablets (?) */
 
 body {
   font-family: 'CaveStoryRegular';
@@ -15,6 +16,10 @@ body {
 
 header {
   font-size: 10vmin;
+}
+
+h1 {
+  font-size: 6vmin;
 }
 
 #gameboard {

@@ -71,7 +71,7 @@ const checkBtn = document.querySelector('#check')
 const newPuzzBtn = document.querySelector('#newPuzzle')
 const filledBtn = document.querySelector('#toggleFilled')
 const blankBtn = document.querySelector('#toggleBlank')
-const boardAdd = document.querySelector('#board')
+const boardAdd = document.querySelector('#board') //don't remember why I added this. doesn't appear anywhere else
 const cells = [...document.querySelectorAll('#board > div')]
 
 /* ----- functions ----- */
@@ -261,7 +261,6 @@ const topClueGen = (abBoard) => {
   return compArray
 }
 
-//leftClueGen working incorrectly
 const leftClueGen = (abBoard) => {
   const compArray = []
   let simpArray = []
