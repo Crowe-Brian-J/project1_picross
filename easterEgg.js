@@ -82,7 +82,6 @@ resetBoard = () => {
   let newArr = board.map((cell) => {
     return (cell = 0)
   })
-  console.log(newArr)
   board = [...newArr]
   render()
 }
