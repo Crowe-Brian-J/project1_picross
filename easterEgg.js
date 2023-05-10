@@ -75,9 +75,21 @@ handlePaint = (evt) => {
 
 handleBrush = (evt) => {
   brush = palettes.indexOf(evt.target)
+  //add highlight
+}
+
+resetBoard = () => {
+  let newArr = board.map((cell) => {
+    return (cell = 0)
+  })
+  console.log(newArr)
+  board = [...newArr]
+  render()
 }
 
 init()
+
 //event listeners
 document.getElementById('board').addEventListener('click', handlePaint)
 document.getElementById('palette').addEventListener('click', handleBrush)
+resetBtn.addEventListener('click', resetBoard)

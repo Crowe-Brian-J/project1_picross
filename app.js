@@ -380,7 +380,7 @@ init()
 
 /* ----- event listeners ----- */
 document.getElementById('board').addEventListener('click', handlePlacement)
-resetBtn.addEventListener('click', resetGame) //See if I need to change reset button as I implement more puzzles
+resetBtn.addEventListener('click', resetGame)
 checkBtn.addEventListener('click', checkPuzzle)
 filledBtn.addEventListener('click', markFilled)
 blankBtn.addEventListener('click', markBlank)
