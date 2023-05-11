@@ -47,7 +47,6 @@ const renderBoard = () => {
   board.forEach((arr, cell) => {
     const cellId = `cell${cell}`
     const cellEl = document.getElementById(cellId)
-    //COLORS[arr] = brush
     cellEl.style.backgroundColor = COLORS[arr]
   })
 }
@@ -66,17 +65,16 @@ const render = () => {
   renderPalette()
   renderControls()
 }
-/*---- May need to set these to two separate functions, one to suck up paint color, one to paint cell ----*/
+
 handlePaint = (evt) => {
-  const cellIdx = cells.indexOf(evt.target) //picking single target?
+  const cellIdx = cells.indexOf(evt.target)
   board[cellIdx] = brush
-  //hover or mousedown  or mousemove? add another event listener inside?
   render()
 }
 
 handleBrush = (evt) => {
-  brush = palettes.indexOf(evt.target)
-  //add highlight
+  const brushIdx = palettes.indexOf(evt.target)
+  brush = brushIdx
 }
 
 resetBoard = () => {
@@ -90,6 +88,6 @@ resetBoard = () => {
 init()
 
 //event listeners
-document.getElementById('board').addEventListener('mousedown', handlePaint)
+document.getElementById('board').addEventListener('click', handlePaint)
 document.getElementById('palette').addEventListener('click', handleBrush)
 resetBtn.addEventListener('click', resetBoard)

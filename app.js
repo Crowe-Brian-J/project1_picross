@@ -59,10 +59,8 @@ let board
 let winner
 let check = 0
 
-//Change puzzle back to 0
-
 let puzzle = 0 // Iterator for which puzzle user is playing.
-let clicker = 1 //set to 1 initially, -1 if marking blank
+let clicker = 1 // set to 1 initially, -1 if marking blank
 
 /* ----- cached elements ----- */
 const messageEl = document.querySelector('h1')
@@ -71,7 +69,7 @@ const checkBtn = document.querySelector('#check')
 const newPuzzBtn = document.querySelector('#newPuzzle')
 const filledBtn = document.querySelector('#toggleFilled')
 const blankBtn = document.querySelector('#toggleBlank')
-const boardAdd = document.querySelector('#board') //don't remember why I added this. doesn't appear anywhere else
+const boardAdd = document.querySelector('#board')
 let diceCheck = document.querySelector('h3')
 const cells = [...document.querySelectorAll('#board > div')]
 
@@ -249,7 +247,7 @@ const topClueGen = (abBoard) => {
         }
         break
       default:
-        console.log('There should not be anything that fits here.')
+        console.log('There should not be anything that fits here.') //for posterity in case something breaks
         break
     }
   }
