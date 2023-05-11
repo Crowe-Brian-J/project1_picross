@@ -30,6 +30,7 @@ I played this game when I was younger on a Gameboy. It's simple enough. You get 
 - [Font](https://fontlibrary.org/en/font/cave-story) Designer: enigmasmp1824
 - [GameBoy Colors](https://www.color-hex.com/color-palette/26401)
 - [Super Nintendo Colors](https://www.raphnet.net/design/console_colors/index_en.php)
+- [Puzzle Pieces by Abstraction aka Music](https://abstractionmusic.bandcamp.com/track/puzzle-pieces)
 
 ---
 

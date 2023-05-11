@@ -330,7 +330,7 @@ const nextPuzzle = () => {
   if (puzzle >= 4) {
     PUZZLES.push(generatePuzzle())
   }
-  if (puzzle >= 10) {
+  if (puzzle >= 7) {
     let diceRoll = Math.floor(Math.random() * 7)
     if (diceRoll > 5) {
       diceCheck.style.visibility = 'visible'
