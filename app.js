@@ -247,7 +247,6 @@ const topClueGen = (abBoard) => {
         }
         break
       default:
-        console.log('There should not be anything that fits here.') //for posterity in case something breaks
         break
     }
   }
