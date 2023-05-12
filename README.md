@@ -26,14 +26,14 @@ Win Condition: Taking the given puzzle's solution and comparing it to the board'
 
 ##### Examples of Grids:
 
-Conceptual:
-i.e. LETTER L (5x5)
-----5--5--1---1---1
-2 →[O][O][--][--][--]
-2 →[O][O][--][--][--]
-2 →[O][O][--][--][--]
-2 →[O][O][--][--][--]
-5 →[O][O][O][O][O]
+Conceptual:\
+i.e. LETTER L (5x5)\
+----5--5--1---1---1\
+2 →[O][O][--][--][--]\
+2 →[O][O][--][--][--]\
+2 →[O][O][--][--][--]\
+2 →[O][O][--][--][--]\
+5 →[O][O][O][O][O]\
 
 Practical:
 ![Image](/pics/emptyBoard.png)
@@ -57,17 +57,17 @@ Each cell is initially blank. It can be marked as Filled or Empty by the player.
 
 To win, the player needs to determine which cells are filled and which are empty. The player uses clues on the outside of the puzzle board (top/left) to make that determination. The number(s) given tell the player how many spaces in a row must be filled, and maybe more importantly, how many consecutive spaces must be filled.
 As this grid is 5x5, it stands to reason that the best option for solving the puzzle is to use the clues that are closest to the number 5 first.
-![Image](/pics/lineLook.png)
+![Image](/pics/lineLook.png)\
 While this clue does not equal 5 to the naked eye, the space between the 2s should be interpreted as 2-1-2. Or more visually reasoned:
-![Image](/pics/whatIKnow.png)
-Here the middle square is marked empty. The filled in cells can then be marked more easily:
-![Image](/pics/filledLine.png)
-The player can then use the knowledge of that row to fill in another row or column based on the given clues:
+![Image](/pics/whatIKnow.png)\
+Here the middle square is marked empty. The filled in cells can then be marked more easily:\
+![Image](/pics/filledLine.png)\
+The player can then use the knowledge of that row to fill in another row or column based on the given clues:\
 ![Image](/pics/takeForColumn.png) -> ![Image](/pics/filledColumn.png)
-Given the clue of 3 and the filled in first cell, the player can determin that the next two spaces in the column must be filled to complete the three.
+Given the clue of 3 and the filled in first cell, the player can determin that the next two spaces in the column must be filled to complete the three.\
 Ideally, the player should be able to take the board from this:
-![Image](/pics/emptyBoard.png)
-To this:
+![Image](/pics/emptyBoard.png)\
+To this:\
 ![Image](/pics/gameWon.png)
 
 ---
