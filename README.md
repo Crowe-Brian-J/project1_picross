@@ -37,7 +37,7 @@ i.e. LETTER L (5x5)\
 
 Practical:\
 ![Image](/pics/emptyBoard.png)\
-![Image](/pics/gameWon.png)\
+![Image](/pics/gameWon.png)
 
 #### Styles:
 
