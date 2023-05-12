@@ -33,11 +33,11 @@ i.e. LETTER L (5x5)\
 2 →[O][O][--][--][--]\
 2 →[O][O][--][--][--]\
 2 →[O][O][--][--][--]\
-5 →[O][O][O][O][O]\
+5 →[O][O][O][O][O]
 
-Practical:
-![Image](/pics/emptyBoard.png)
-![Image](/pics/gameWon.png)
+Practical:\
+![Image](/pics/emptyBoard.png)\
+![Image](/pics/gameWon.png)\
 
 #### Styles:
 
@@ -56,16 +56,17 @@ Each cell is initially blank. It can be marked as Filled or Empty by the player.
 ## **_Tutorial_**
 
 To win, the player needs to determine which cells are filled and which are empty. The player uses clues on the outside of the puzzle board (top/left) to make that determination. The number(s) given tell the player how many spaces in a row must be filled, and maybe more importantly, how many consecutive spaces must be filled.
-As this grid is 5x5, it stands to reason that the best option for solving the puzzle is to use the clues that are closest to the number 5 first.
+As this grid is 5x5, it stands to reason that the best option for solving the puzzle is to use the clues that are closest to the number 5 first.\
 ![Image](/pics/lineLook.png)\
-While this clue does not equal 5 to the naked eye, the space between the 2s should be interpreted as 2-1-2. Or more visually reasoned:
+While this clue does not equal 5 to the naked eye, the space between the 2s should be interpreted as 2-1-2. Or more visually reasoned:\
 ![Image](/pics/whatIKnow.png)\
 Here the middle square is marked empty. The filled in cells can then be marked more easily:\
 ![Image](/pics/filledLine.png)\
 The player can then use the knowledge of that row to fill in another row or column based on the given clues:\
-![Image](/pics/takeForColumn.png) -> ![Image](/pics/filledColumn.png)
+![Image](/pics/takeForColumn.png) ->\
+ ![Image](/pics/filledColumn.png)\
 Given the clue of 3 and the filled in first cell, the player can determin that the next two spaces in the column must be filled to complete the three.\
-Ideally, the player should be able to take the board from this:
+Ideally, the player should be able to take the board from this:\
 ![Image](/pics/emptyBoard.png)\
 To this:\
 ![Image](/pics/gameWon.png)
@@ -117,8 +118,8 @@ Outside of the main functionality of the game as outlined above, I also included
 
 ## **_Easter Egg_**
 
-In addition to the game, I included an opportunity take a break from the stress. It appears after the puzzle variable is greater than or equal to 7 and the diceRoll is greater than 5 (1/6 chance at that point).
-![Image](/pics/needABreak.png)
+In addition to the game, I included an opportunity take a break from the stress. It appears after the puzzle variable is greater than or equal to 7 and the diceRoll is greater than 5 (1/6 chance at that point).\
+![Image](/pics/needABreak.png)\
 When the player clicks the link, they are taken to a new page with a blank 16x16 canvas and a palette of 16 colors. Using similar functions to the game, the player is allowed to click in the palette to choose which color they would like to paint with (akin to marking filled or blank). Cell by cell, the player is able paint in a zen manner. When they're done, they're able to click the link to restart the game, or close the window and return to the game state they had when they started the break. It's a simple pixel editor, but you can have some fun with it. It's akin MarioPaint's stamp maker feature (an old Super Nintendo game).
 
 ---
