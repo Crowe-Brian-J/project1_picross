@@ -98,6 +98,11 @@ Outside of the main functionality of the game as outlined above, I also included
 
 ## **_Credits_**
 
+- Built with:
+  -- HTML
+  -- CSS
+  -- Javascript
+
 - Nintendo (Mario's Picross (c)1995)
 - Plenty of other apps across the last 15 years that I've used
 - [Wikipedia](https://en.wikipedia.org/wiki/Nonogram) (Who said I couldn't cite Wikipedia?)
