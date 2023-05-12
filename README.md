@@ -63,8 +63,8 @@ While this clue does not equal 5 to the naked eye, the space between the 2s shou
 Here the middle square is marked empty. The filled in cells can then be marked more easily:\
 ![Image](/pics/filledLine.png)\
 The player can then use the knowledge of that row to fill in another row or column based on the given clues:\
-![Image](/pics/takeForColumn.png) ->\
- ![Image](/pics/filledColumn.png)\
+![Image](/pics/takeForColumn.png) ->
+![Image](/pics/filledColumn.png)\
 Given the clue of 3 and the filled in first cell, the player can determin that the next two spaces in the column must be filled to complete the three.\
 Ideally, the player should be able to take the board from this:\
 ![Image](/pics/emptyBoard.png)\
