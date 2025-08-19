@@ -422,6 +422,19 @@ const handleKeyPlacement = (evt) => {
 }
 boardAdd.addEventListener('keydown', handleKeyPlacement)
 
+// Right-click to mark blank (context menu)
+const handleRightClick = (evt) => {
+  if (winner) return
+  if (!(evt.target && evt.target.classList.contains('cell'))) return
+  evt.preventDefault()
+  const cellIdx = cells.indexOf(evt.target)
+  if (cellIdx === -1) return
+  // Toggle blank marking with right-click
+  board[cellIdx] = board[cellIdx] === -1 ? 0 : -1
+  render()
+}
+boardAdd.addEventListener('contextmenu', handleRightClick)
+
 // Instructions modal: lazy populate and show
 const instructionHtml = `
   <p>The numbers adjacent to each row and column tell you how many cells should be filled.</p>
