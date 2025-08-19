@@ -24,6 +24,9 @@ let board = []
 let palette = []
 let paintColor
 let brush = 0
+let isPainting = false
+let isErasing = false
+let lastPaintedIdx = -1
 
 for (let i = 0; i < 256; i++) {
   board.push(0)
@@ -66,9 +69,15 @@ const render = () => {
   renderControls()
 }
 
+const paintCellAtIndex = (cellIdx, colorIdx = brush) => {
+  if (cellIdx < 0 || cellIdx >= board.length) return
+  if (board[cellIdx] === colorIdx) return
+  board[cellIdx] = colorIdx
+}
+
 handlePaint = (evt) => {
   const cellIdx = cells.indexOf(evt.target)
-  board[cellIdx] = brush
+  paintCellAtIndex(cellIdx, isErasing ? 0 : brush)
   render()
 }
 
@@ -88,6 +97,90 @@ resetBoard = () => {
 init()
 
 //event listeners
-document.getElementById('board').addEventListener('click', handlePaint)
+const boardEl = document.getElementById('board')
+boardEl.addEventListener('click', handlePaint)
 document.getElementById('palette').addEventListener('click', handleBrush)
 resetBtn.addEventListener('click', resetBoard)
+
+// Mouse drag-to-paint
+const handleMouseDown = (evt) => {
+  if (!evt.target.classList.contains('cell')) return
+  isPainting = true
+  isErasing = evt.button === 2
+  const idx = cells.indexOf(evt.target)
+  lastPaintedIdx = idx
+  paintCellAtIndex(idx, isErasing ? 0 : brush)
+  render()
+}
+
+const handleMouseOver = (evt) => {
+  if (!isPainting) return
+  if (!evt.target.classList.contains('cell')) return
+  const idx = cells.indexOf(evt.target)
+  if (idx === lastPaintedIdx) return
+  lastPaintedIdx = idx
+  paintCellAtIndex(idx, isErasing ? 0 : brush)
+  render()
+}
+
+const stopPainting = () => {
+  isPainting = false
+  isErasing = false
+  lastPaintedIdx = -1
+}
+
+boardEl.addEventListener('mousedown', handleMouseDown)
+boardEl.addEventListener('mouseover', handleMouseOver)
+document.addEventListener('mouseup', stopPainting)
+// Prevent context menu on right-drag erase
+boardEl.addEventListener('contextmenu', (e) => e.preventDefault())
+
+// Touch drag-to-paint
+const findCellIdxFromTouch = (touch) => {
+  const el = document.elementFromPoint(touch.clientX, touch.clientY)
+  if (!el || !el.classList || !el.classList.contains('cell')) return -1
+  return cells.indexOf(el)
+}
+
+let touchEraserTimerId = null
+let touchEraserActive = false
+
+const handleTouchStart = (e) => {
+  if (!e.touches || e.touches.length !== 1) return
+  e.preventDefault()
+  const idx = findCellIdxFromTouch(e.touches[0])
+  if (idx === -1) return
+  isPainting = true
+  lastPaintedIdx = idx
+  paintCellAtIndex(idx, touchEraserActive ? 0 : brush)
+  render()
+  // Start long-press timer to enable eraser while holding
+  touchEraserActive = false
+  if (touchEraserTimerId) clearTimeout(touchEraserTimerId)
+  touchEraserTimerId = setTimeout(() => {
+    touchEraserActive = true
+  }, 500)
+}
+
+const handleTouchMove = (e) => {
+  if (!isPainting) return
+  if (!e.touches || e.touches.length !== 1) return
+  e.preventDefault()
+  const idx = findCellIdxFromTouch(e.touches[0])
+  if (idx === -1 || idx === lastPaintedIdx) return
+  lastPaintedIdx = idx
+  paintCellAtIndex(idx, touchEraserActive ? 0 : brush)
+  render()
+}
+
+const handleTouchEnd = () => {
+  stopPainting()
+  if (touchEraserTimerId) clearTimeout(touchEraserTimerId)
+  touchEraserTimerId = null
+  touchEraserActive = false
+}
+
+boardEl.addEventListener('touchstart', handleTouchStart, { passive: false })
+boardEl.addEventListener('touchmove', handleTouchMove, { passive: false })
+boardEl.addEventListener('touchend', handleTouchEnd, { passive: false })
+boardEl.addEventListener('touchcancel', handleTouchEnd, { passive: false })

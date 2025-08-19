@@ -81,6 +81,7 @@ a, a:visited {
   grid-template-rows: repeat(2, 3.0vmin);
   grid-template-columns: repeat(8, 3.0vmin);
   border: 1px solid #54585a;
+  margin-top: 1vmin;
 }
 
 .pal {
