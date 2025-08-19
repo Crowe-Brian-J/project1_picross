@@ -138,8 +138,10 @@ button:focus-visible, .cell:focus-visible {
   font-size: 3vmin;
   border: 4px outset #306230;
   border-radius: 6px;
-  width: 15vmin;
-  height: 6vmin;
+  width: auto;
+  height: auto;
+  padding: 0.6vmin 2vmin;
+  white-space: nowrap;
 }
 
 #toggleFilled {
