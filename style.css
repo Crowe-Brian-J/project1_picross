@@ -202,8 +202,13 @@ iframe {
     grid-template-columns: repeat(5, 12vmin);
   }
   #topmarkers > div {
-    height: 14vmin;
-    font-size: 6vmin;
+    height: 16vmin;
+    font-size: 5.4vmin;
+    line-height: 1;
+  }
+  #topmarkers > div > div {
+    line-height: 1;
+    margin: 0.2vmin 0;
   }
   #board {
     grid-template-columns: repeat(5, 12vmin);
@@ -211,6 +216,22 @@ iframe {
   }
   .cell {
     font-size: 12vmin;
+  }
+
+  /* Prevent clue overflow: make left clues vertical and smaller */
+  #leftmarkers > div {
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 10vmin;
+    height: 10vmin;
+    font-size: 4.2vmin;
+    text-align: center;
+    gap: 0.6vmin;
+    white-space: nowrap;
+  }
+  #leftmarkers > div > div {
+    line-height: 1;
   }
 
   #check, #reset, #newPuzzle, #toggleFilled, #toggleBlank, #instruction {
