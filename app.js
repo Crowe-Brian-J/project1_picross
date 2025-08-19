@@ -74,6 +74,9 @@ const boardAdd = document.querySelector('#board')
 let diceCheck = document.querySelector('h3')
 const cells = [...document.querySelectorAll('#board > div')]
 const instructionBtn = document.querySelector('#instruction')
+const instructionModal = document.querySelector('#instructionModal')
+const modalCloseBtn = document.querySelector('#modalClose')
+const instructionText = document.querySelector('#instructionText')
 
 // Accessibility: identify grid, make cells focusable and screen-reader friendly
 boardAdd && boardAdd.setAttribute('role', 'grid')
@@ -419,10 +422,36 @@ const handleKeyPlacement = (evt) => {
 }
 boardAdd.addEventListener('keydown', handleKeyPlacement)
 
-// Hook up instructions without inline JS
-instructionBtn &&
-  instructionBtn.addEventListener('click', () => {
-    alert(
-      'The numbers adjacent to each row and column below tell you how many cells should be filled. Click on the individual cells to fill the puzzle. If you are not sure which ones to fill, but can determine which cells not to fill, click MARK BLANK and you can designate an empty cell. Toggle back to MARK FILLED to complete. When you think you are done, click CHECK SOLUTION to verify.'
-    )
+// Instructions modal: lazy populate and show
+const instructionHtml = `
+  <p>The numbers adjacent to each row and column tell you how many cells should be filled.</p>
+  <p>Click a cell to mark it. Use <strong>MARK FILLED</strong> to fill and <strong>MARK BLANK</strong> to place an X where you’re certain it’s empty. Toggle between these modes as needed.</p>
+  <p>When you think you’re done, click <strong>CHECK SOLUTION</strong> to verify.</p>
+`
+
+const openInstructions = () => {
+  if (!instructionModal) return
+  if (instructionText) {
+    instructionText.innerHTML = instructionHtml
+  }
+  instructionModal.hidden = false
+  modalCloseBtn && modalCloseBtn.focus()
+}
+
+const closeInstructions = () => {
+  if (!instructionModal) return
+  instructionModal.hidden = true
+  instructionBtn && instructionBtn.focus()
+}
+
+instructionBtn && instructionBtn.addEventListener('click', openInstructions)
+modalCloseBtn && modalCloseBtn.addEventListener('click', closeInstructions)
+instructionModal &&
+  instructionModal.addEventListener('click', (e) => {
+    if (e.target === instructionModal) closeInstructions()
   })
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && instructionModal && !instructionModal.hidden) {
+    closeInstructions()
+  }
+})

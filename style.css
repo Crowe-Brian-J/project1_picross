@@ -208,6 +208,56 @@ iframe {
   margin-top: 1vmin;
 }
 
+/* Modal */
+.modal[hidden] { display: none !important; }
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4vmin;
+  z-index: 999;
+}
+.modal-content {
+  background: #9bbc0f;
+  color: #0f380f;
+  border: 6px solid #306230;
+  border-radius: 8px;
+  width: min(720px, 92vw);
+  max-height: 85vh;
+  overflow: auto;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 4px solid #306230;
+}
+.modal-body {
+  padding: 1rem 1.25rem 1.5rem;
+  font-size: clamp(18px, 4vmin, 28px);
+  line-height: 1.55;
+}
+.modal-header h2 {
+  margin: 0;
+  font-size: clamp(22px, 5vmin, 36px);
+  line-height: 1.2;
+}
+.modal-close {
+  font-family: CaveStoryRegular, CaveStory, 'Cave Story', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 2rem;
+  line-height: 1;
+  background: #8bac0f;
+  color: #306230;
+  border: 4px outset #306230;
+  border-radius: 6px;
+  padding: 0.1rem 0.5rem;
+}
+
 /* Respect users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -280,5 +330,13 @@ iframe {
   #filledOrBlank {
     grid-template-columns: 1fr;
     gap: 3vmin;
+  }
+
+  /* Modal type scaling on small screens */
+  .modal-body {
+    font-size: clamp(18px, 5.2vmin, 30px);
+  }
+  .modal-header h2 {
+    font-size: clamp(22px, 7vmin, 40px);
   }
 }
