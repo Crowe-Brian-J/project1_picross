@@ -169,6 +169,23 @@ iframe {
   align-items: center;
 }
 
+/* Button areas */
+#buttons {
+  display: flex;
+  gap: 2vmin;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#filledOrBlank {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  gap: 2vmin;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1vmin;
+}
+
 /* Respect users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -194,5 +211,28 @@ iframe {
   }
   .cell {
     font-size: 12vmin;
+  }
+
+  #check, #reset, #newPuzzle, #toggleFilled, #toggleBlank, #instruction {
+    font-size: 4.2vmin;
+    padding: 1vmin 2vmin;
+    max-width: 100%;
+    white-space: nowrap;
+  }
+
+  #toggleFilled, #toggleBlank {
+    width: auto;
+    min-width: 36vmin;
+    height: auto;
+  }
+
+  #buttons {
+    gap: 3vmin;
+    margin-top: 2vmin;
+  }
+
+  #filledOrBlank {
+    grid-template-columns: 1fr;
+    gap: 3vmin;
   }
 }
