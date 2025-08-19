@@ -1,3 +1,4 @@
+'use strict'
 /* ----- constants ----- */
 const MARKS = {
   0: '#9bbc0f', //blank
@@ -72,6 +73,14 @@ const blankBtn = document.querySelector('#toggleBlank')
 const boardAdd = document.querySelector('#board')
 let diceCheck = document.querySelector('h3')
 const cells = [...document.querySelectorAll('#board > div')]
+const instructionBtn = document.querySelector('#instruction')
+
+// Accessibility: identify grid, make cells focusable and screen-reader friendly
+boardAdd && boardAdd.setAttribute('role', 'grid')
+cells.forEach((cell, idx) => {
+  cell.setAttribute('tabindex', '0')
+  cell.setAttribute('role', 'gridcell')
+})
 
 /* ----- functions ----- */
 const init = () => {
@@ -94,6 +103,8 @@ const renderBoard = () => {
       //clears X
       cellEl.innerText = ''
     }
+    const stateLabel = arr === 1 ? 'filled' : (arr === -1 ? 'marked empty' : 'blank')
+    cellEl.setAttribute('aria-label', `Cell ${cell + 1} ${stateLabel}`)
   })
 
   //DRYer Code - Defining repeatable code for each set of clues
@@ -105,7 +116,7 @@ const renderBoard = () => {
         longClue += `<div>${cl}</div>`
       })
     } else {
-      longClue = `<div>${clue}</div`
+      longClue = `<div>${clue}</div>`
     }
     clueEl.innerHTML = longClue
   }
@@ -149,6 +160,7 @@ const render = () => {
 }
 
 const generateBoard = () => {
+  // refactor
   let abstractBoard = [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
   ]
@@ -346,7 +358,7 @@ const nextPuzzle = () => {
   init()
 }
 
-handlePlacement = (evt) => {
+const handlePlacement = (evt) => {
   if (winner) return
   const cellIdx = cells.indexOf(evt.target)
   //Guards
@@ -359,7 +371,7 @@ handlePlacement = (evt) => {
   render()
 }
 
-resetGame = () => {
+const resetGame = () => {
   board = [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
   ]
@@ -391,3 +403,17 @@ checkBtn.addEventListener('click', checkPuzzle)
 filledBtn.addEventListener('click', markFilled)
 blankBtn.addEventListener('click', markBlank)
 newPuzzBtn.addEventListener('click', nextPuzzle)
+
+// Keyboard support for grid interaction
+const handleKeyPlacement = (evt) => {
+  if ((evt.key === 'Enter' || evt.key === ' ') && evt.target.classList.contains('cell')) {
+    evt.preventDefault()
+    handlePlacement({ target: evt.target })
+  }
+}
+boardAdd.addEventListener('keydown', handleKeyPlacement)
+
+// Hook up instructions without inline JS
+instructionBtn && instructionBtn.addEventListener('click', () => {
+  alert('The numbers adjacent to each row and column below tell you how many cells should be filled. Click on the individual cells to fill the puzzle. If you are not sure which ones to fill, but can determine which cells not to fill, click MARK BLANK and you can designate an empty cell. Toggle back to MARK FILLED to complete. When you think you are done, click CHECK SOLUTION to verify.')
+})

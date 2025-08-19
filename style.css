@@ -1,6 +1,11 @@
 /* Media Query */
 /* Need to expand id='#gameboard' on phones/tablets (?) */
 
+/* Global resets and improvements */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'CaveStoryRegular';
   font-weight: normal;
@@ -11,7 +16,6 @@ body {
   justify-content: center;
   align-items: center;
   color: #0f380f;
-  transform: scale(0.80);
 }
 
 header {
@@ -79,7 +83,7 @@ a, a:visited {
   border: 1vmin solid #0f380f;
   color: #8bac0f;
   background-color: #306230;
-  transform: scale(0.7)
+  transform: scale(0.7);
 }
 
 #board {
@@ -87,7 +91,7 @@ a, a:visited {
   grid-template-columns: repeat(5, 10vmin);
   grid-template-rows: repeat(5, 10vmin);
   gap: 0vmin;
-  border: 1vmin solid #8bac0f
+  border: 1vmin solid #8bac0f;
 }
 
 .cell {
@@ -96,7 +100,7 @@ a, a:visited {
   justify-content: center;
   align-items: center;
   font-size: 10vmin;
-  border: 1vmin solid #8bac0f
+  border: 1vmin solid #8bac0f;
 }
 
 #check, #reset, #newPuzzle{
@@ -109,10 +113,19 @@ a, a:visited {
   border-radius: 5px;
 }
 
+button {
+  cursor: pointer;
+  transition: background-color 200ms ease, color 200ms ease, transform 200ms ease;
+}
+
 button:hover {
   color: #9bbc0f;
   background-color: #0f380f;
-  transition: all 500ms ease-in;
+}
+
+button:focus-visible, .cell:focus-visible {
+  outline: 3px solid #0f380f;
+  outline-offset: 2px;
 }
 
 #newPuzzle {
@@ -154,4 +167,32 @@ iframe {
   display: grid;
   justify-content: center;
   align-items: center;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+  }
+}
+
+/* Mobile tweaks */
+@media (max-width: 600px) {
+  #leftmarkers {
+    grid-template-rows: repeat(5, 12vmin);
+  }
+  #topmarkers {
+    grid-template-columns: repeat(5, 12vmin);
+  }
+  #topmarkers > div {
+    height: 14vmin;
+    font-size: 6vmin;
+  }
+  #board {
+    grid-template-columns: repeat(5, 12vmin);
+    grid-template-rows: repeat(5, 12vmin);
+  }
+  .cell {
+    font-size: 12vmin;
+  }
 }
