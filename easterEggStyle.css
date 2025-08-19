@@ -1,5 +1,18 @@
-body {
+@import url('https://fontlibrary.org/face/cave-story');
+
+@font-face {
   font-family: 'CaveStoryRegular';
+  src: url('./fonts/CaveStoryRegular.woff2') format('woff2'),
+       url('./fonts/CaveStoryRegular.woff') format('woff'),
+       url('./fonts/CaveStoryRegular.ttf') format('truetype'),
+       url('./fonts/Cave-Story.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: CaveStoryRegular, CaveStory, 'Cave Story', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
   font-weight: normal;
   font-style: normal;
   background-color: #b2b4b2;
@@ -8,28 +21,37 @@ body {
   justify-content: center;
   align-items: center;
   color: #514689;
-  transform: scale(0.75);
 }
 
-header {
-  font-size: 10vmin;
+/* Top text layout */
+.masthead {
+  display: grid;
+  grid-auto-flow: row;
+  align-items: center;
+  justify-items: center;
+  gap: 0.4vmin;
+  margin: 1vmin 0 1.5vmin;
 }
 
-h1 { 
-  font-size: 6vmin;
+.masthead > header {
+  font-size: clamp(28px, 8vmin, 64px);
+}
+
+.masthead > h1 {
+  font-size: clamp(22px, 6vmin, 48px);
   margin: 0;
 }
 
-h2 {
-  font-size: 4vmin;
+.masthead > h2 {
+  font-size: clamp(16px, 4.4vmin, 32px);
   margin: 0;
 }
 
-h3{
-  color: #514689;
-  margin: 0;
-  font-size: 3vmin;
-  text-decoration: none;
+.resume-hint {
+  font-size: clamp(12px, 2.2vmin, 16px);
+  margin: 0.2vmin 0 0;
+  color: #3e4245;
+  text-align: center;
 }
 
 a, a:visited {
@@ -39,8 +61,8 @@ a, a:visited {
 
 #board {
   display: grid;
-  grid-template-columns: repeat(16, 5vmin);
-  grid-template-rows: repeat(16, 5vmin);
+  grid-template-columns: repeat(16, 4.1vmin);
+  grid-template-rows: repeat(16, 4.1vmin);
   gap: 0vmin;
   border: 1px solid #54585a;
 }
@@ -56,8 +78,8 @@ a, a:visited {
 
 #palette {
   display: grid;
-  grid-template-rows: repeat(2, 4vmin);
-  grid-template-columns: repeat(8, 4vmin);
+  grid-template-rows: repeat(2, 3.0vmin);
+  grid-template-columns: repeat(8, 3.0vmin);
   border: 1px solid #54585a;
 }
 
@@ -71,10 +93,41 @@ a, a:visited {
 }
 
 button {
-  font-family: 'CaveStoryRegular';
-  font-size: 5vmin;
-  margin-top: 3vmin;
+  font-family: CaveStoryRegular, CaveStory, 'Cave Story', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 3.2vmin;
+  margin-top: 1.5vmin;
   color: #a7a4e0;
   background-color: #54585a;
   border-radius: 5px;
+  text-transform: uppercase;
+  box-shadow: 0 2px 0 #3e4245;
+  border: none;
+  padding: 0.4rem 0.8rem;
+}
+
+/* Move the return link away from the board and make it less tappable by mistake */
+#returnLink {
+  margin-top: 2vmin;
+}
+.rest-link,
+.rest-link:visited {
+  display: inline-block;
+  font-family: CaveStoryRegular, CaveStory, 'Cave Story', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 3.2vmin;
+  color: #a7a4e0;
+  background-color: #54585a;
+  border-radius: 5px;
+  padding: 0.3rem 0.8rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  box-shadow: 0 2px 0 #3e4245;
+}
+button:hover,
+.rest-link:hover {
+  filter: brightness(1.06);
+}
+button:active,
+.rest-link:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 #3e4245;
 }

@@ -6,17 +6,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PiCOLORS</title>
-  <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/cave-story" type="text/css" />
+  <link rel="preconnect" href="https://fontlibrary.org" crossorigin>
+  <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/cave-story" type="text/css" />
   <link rel="stylesheet" type="text/css" href="easterEggStyle.css" />
   <script defer src="easterEgg.js"></script>
 </head>
 
 <body>
-  <header>PiCOLORS</header>
-  <h1>Draw Freely</h1>
-  <h2>It's not that complicated</h2>
-  <h3><a target='_blank' rel="noopener" href="./index.html">Feeling rested? Click to restart. Close tab if you want to go back to the
-      same puzzle.</a></h3>
+  <section class="masthead">
+    <header>PiCOLORS</header>
+    <a class="rest-link" href="./index.html" aria-describedby="resumeHint">Return to Game</a>
+    <h1>Draw Freely</h1>
+    <h2>It's not that complicated. Think Paint.</h2>
+    <p id="resumeHint" class="resume-hint">Want to keep your current progress? Close this tab to return where you left off. “Return to Game” starts fresh.</p>
+  </section>
   <section id="board">
     <!--top row-->
     <div class="cell" id="cell0"></div>
@@ -292,7 +295,6 @@
     <div class="cell" id="cell254"></div>
     <div class="cell" id="cell255"></div>
   </section>
-  <br>
   <section id="palette">
     <div class="pal" id="p0"></div>
     <div class="pal" id="p1"></div>
@@ -314,6 +316,7 @@
   <section id="buttons">
     <button id="reset">RESET BOARD</button>
   </section>
+
 
 </body>
 
