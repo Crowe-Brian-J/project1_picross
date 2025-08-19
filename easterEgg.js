@@ -36,6 +36,7 @@ for (let i = 0; i < 256; i++) {
 const cells = [...document.querySelectorAll('#board > div')]
 const palettes = [...document.querySelectorAll('#palette > div')]
 const resetBtn = document.querySelector('#reset')
+const srStatus = document.getElementById('sr-status')
 
 //functions
 const init = () => {
@@ -51,6 +52,9 @@ const renderBoard = () => {
     const cellId = `cell${cell}`
     const cellEl = document.getElementById(cellId)
     cellEl.style.backgroundColor = COLORS[arr]
+    cellEl.setAttribute('role', 'gridcell')
+    cellEl.setAttribute('tabindex', '0')
+    cellEl.setAttribute('aria-label', `Cell ${cell + 1}, ${COLORS[arr]}`)
   })
 }
 
@@ -59,6 +63,10 @@ const renderPalette = () => {
     const sqId = `p${sq}`
     const sqEl = document.getElementById(sqId)
     sqEl.style.backgroundColor = COLORS[sq]
+    sqEl.setAttribute('role', 'radio')
+    sqEl.setAttribute('tabindex', sq === brush ? '0' : '-1')
+    sqEl.setAttribute('aria-checked', sq === brush ? 'true' : 'false')
+    sqEl.setAttribute('aria-label', `Choose ${COLORS[sq]}`)
   })
 }
 const renderControls = () => {}
@@ -84,6 +92,8 @@ handlePaint = (evt) => {
 handleBrush = (evt) => {
   const brushIdx = palettes.indexOf(evt.target)
   brush = brushIdx
+  if (srStatus) srStatus.textContent = `Selected color ${COLORS[brush]}`
+  render()
 }
 
 resetBoard = () => {
@@ -110,6 +120,10 @@ const handleMouseDown = (evt) => {
   const idx = cells.indexOf(evt.target)
   lastPaintedIdx = idx
   paintCellAtIndex(idx, isErasing ? 0 : brush)
+  if (srStatus)
+    srStatus.textContent = `Painted cell ${idx + 1} ${
+      COLORS[isErasing ? 0 : brush]
+    }`
   render()
 }
 
@@ -120,6 +134,10 @@ const handleMouseOver = (evt) => {
   if (idx === lastPaintedIdx) return
   lastPaintedIdx = idx
   paintCellAtIndex(idx, isErasing ? 0 : brush)
+  if (srStatus)
+    srStatus.textContent = `Painted cell ${idx + 1} ${
+      COLORS[isErasing ? 0 : brush]
+    }`
   render()
 }
 
@@ -153,6 +171,10 @@ const handleTouchStart = (e) => {
   isPainting = true
   lastPaintedIdx = idx
   paintCellAtIndex(idx, touchEraserActive ? 0 : brush)
+  if (srStatus)
+    srStatus.textContent = `Painted cell ${idx + 1} ${
+      COLORS[touchEraserActive ? 0 : brush]
+    }`
   render()
   // Start long-press timer to enable eraser while holding
   touchEraserActive = false
@@ -170,6 +192,10 @@ const handleTouchMove = (e) => {
   if (idx === -1 || idx === lastPaintedIdx) return
   lastPaintedIdx = idx
   paintCellAtIndex(idx, touchEraserActive ? 0 : brush)
+  if (srStatus)
+    srStatus.textContent = `Painted cell ${idx + 1} ${
+      COLORS[touchEraserActive ? 0 : brush]
+    }`
   render()
 }
 

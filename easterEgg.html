@@ -20,7 +20,7 @@
     <h2>It's not that complicated. Think Paint.</h2>
     <p id="resumeHint" class="resume-hint">Want to keep your current progress? Close this tab to return where you left off. “Return to Game” starts fresh.</p>
   </section>
-  <section id="board">
+  <section id="board" role="grid" aria-label="Pixel canvas">
     <!--top row-->
     <div class="cell" id="cell0"></div>
     <div class="cell" id="cell1"></div>
@@ -295,7 +295,7 @@
     <div class="cell" id="cell254"></div>
     <div class="cell" id="cell255"></div>
   </section>
-  <section id="palette">
+  <section id="palette" role="radiogroup" aria-label="Color palette">
     <div class="pal" id="p0"></div>
     <div class="pal" id="p1"></div>
     <div class="pal" id="p2"></div>
@@ -316,6 +316,8 @@
   <section id="buttons">
     <button id="reset">RESET BOARD</button>
   </section>
+
+  <div id="sr-status" class="sr-only" aria-live="polite"></div>
 
 
 </body>
