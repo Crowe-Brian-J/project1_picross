@@ -62,6 +62,7 @@ let check = 0
 
 let puzzle = 0 // Iterator for which puzzle user is playing.
 let clicker = 1 // set to 1 initially, -1 if marking blank
+let lastCheckCorrectCells = null
 
 /* ----- cached elements ----- */
 const messageEl = document.querySelector('h1')
@@ -92,6 +93,7 @@ const init = () => {
   ]
   winner = null
   render()
+  updateToggleAria()
 }
 
 const renderBoard = () => {
@@ -146,7 +148,11 @@ const renderMessage = () => {
   } else if (check) {
     messageEl.style.backgroundColor = '#9bbc0f'
     messageEl.style.color = '#0f380f'
-    messageEl.innerHTML = "Nope, that's not it, try again"
+    const summary =
+      typeof lastCheckCorrectCells === 'number'
+        ? ` — ${lastCheckCorrectCells}/25 cells match`
+        : ''
+    messageEl.innerHTML = `Not correct yet, try again${summary}`
   } else {
     messageEl.style.backgroundColor = '#9bbc0f'
     messageEl.style.color = '#0f380f'
@@ -336,9 +342,11 @@ const checkPuzzle = () => {
   if (checkTotal === 25) {
     winner = 1
     check = 0
+    lastCheckCorrectCells = null
     render()
   } else {
     check++
+    lastCheckCorrectCells = checkTotal
     render()
   }
 }
@@ -390,6 +398,7 @@ const markBlank = () => {
   filledBtn.style.backgroundColor = '#9bbc0f'
   blankBtn.style.color = '#9bbc0f'
   blankBtn.style.backgroundColor = '#0f380f'
+  updateToggleAria()
 }
 
 const markFilled = () => {
@@ -398,6 +407,14 @@ const markFilled = () => {
   filledBtn.style.backgroundColor = '#0f380f'
   blankBtn.style.color = '#0f380f'
   blankBtn.style.backgroundColor = '#9bbc0f'
+  updateToggleAria()
+}
+
+const updateToggleAria = () => {
+  if (filledBtn)
+    filledBtn.setAttribute('aria-pressed', clicker === 1 ? 'true' : 'false')
+  if (blankBtn)
+    blankBtn.setAttribute('aria-pressed', clicker === -1 ? 'true' : 'false')
 }
 
 init()
@@ -427,13 +444,153 @@ const handleRightClick = (evt) => {
   if (winner) return
   if (!(evt.target && evt.target.classList.contains('cell'))) return
   evt.preventDefault()
+  // If a long-press just occurred, ignore the follow-up contextmenu event (mobile)
+  if (Date.now() - lastLongPressAt < 700) return
   const cellIdx = cells.indexOf(evt.target)
   if (cellIdx === -1) return
   // Toggle blank marking with right-click
   board[cellIdx] = board[cellIdx] === -1 ? 0 : -1
   render()
+  // Prevent the subsequent synthetic click from undoing the change
+  suppressNextClick = true
 }
 boardAdd.addEventListener('contextmenu', handleRightClick)
+
+// Long-press on touch to mark blank
+let longPressTimerId = null
+let longPressActive = false
+let longPressCellIdx = -1
+let suppressNextClick = false
+let lastLongPressAt = 0
+
+// Also support touch events explicitly to better control default click behavior
+let touchTimerId = null
+let touchLongPressActive = false
+let touchCellIdx = -1
+let touchStartX = 0
+let touchStartY = 0
+const TOUCH_MOVE_CANCEL_PX = 10
+
+const clearLongPress = () => {
+  if (longPressTimerId) {
+    clearTimeout(longPressTimerId)
+    longPressTimerId = null
+  }
+}
+
+const handlePointerDown = (evt) => {
+  if (winner) return
+  if (evt.pointerType !== 'touch') return
+  const targetCell =
+    evt.target && evt.target.classList && evt.target.classList.contains('cell')
+      ? evt.target
+      : null
+  if (!targetCell) return
+  const cellIdx = cells.indexOf(targetCell)
+  if (cellIdx === -1) return
+  clearLongPress()
+  longPressActive = false
+  longPressCellIdx = cellIdx
+  longPressTimerId = setTimeout(() => {
+    longPressActive = true
+  }, 500)
+}
+
+const handlePointerUpOrCancel = () => {
+  if (longPressTimerId) {
+    clearLongPress()
+  }
+  if (longPressActive) {
+    if (longPressCellIdx !== -1) {
+      board[longPressCellIdx] = board[longPressCellIdx] === -1 ? 0 : -1
+      render()
+      lastLongPressAt = Date.now()
+    }
+    suppressNextClick = true
+  }
+  longPressActive = false
+  longPressCellIdx = -1
+}
+
+boardAdd.addEventListener('pointerdown', handlePointerDown)
+boardAdd.addEventListener('pointerup', handlePointerUpOrCancel)
+boardAdd.addEventListener('pointercancel', handlePointerUpOrCancel)
+boardAdd.addEventListener('pointerleave', handlePointerUpOrCancel)
+
+// Suppress click after a long-press
+const originalHandlePlacement = handlePlacement
+const handlePlacementWrapped = (evt) => {
+  if (suppressNextClick) {
+    suppressNextClick = false
+    return
+  }
+  originalHandlePlacement(evt)
+}
+document.getElementById('board').removeEventListener('click', handlePlacement)
+document
+  .getElementById('board')
+  .addEventListener('click', handlePlacementWrapped)
+
+// Touch-based long-press (for browsers with limited PointerEvent behavior)
+const findCellFromTouch = (touch) => {
+  const el = document.elementFromPoint(touch.clientX, touch.clientY)
+  if (!el) return -1
+  if (el.classList && el.classList.contains('cell')) {
+    return cells.indexOf(el)
+  }
+  return -1
+}
+
+const handleTouchStart = (e) => {
+  if (winner) return
+  if (!e.touches || e.touches.length !== 1) return
+  const touch = e.touches[0]
+  touchCellIdx = findCellFromTouch(touch)
+  if (touchCellIdx === -1) return
+  touchStartX = touch.clientX
+  touchStartY = touch.clientY
+  touchLongPressActive = false
+  if (touchTimerId) clearTimeout(touchTimerId)
+  touchTimerId = setTimeout(() => {
+    touchLongPressActive = true
+    // Toggle blank on threshold
+    board[touchCellIdx] = board[touchCellIdx] === -1 ? 0 : -1
+    render()
+    lastLongPressAt = Date.now()
+    suppressNextClick = true
+  }, 500)
+}
+
+const handleTouchMove = (e) => {
+  if (touchTimerId && e.touches && e.touches.length === 1) {
+    const t = e.touches[0]
+    const dx = Math.abs(t.clientX - touchStartX)
+    const dy = Math.abs(t.clientY - touchStartY)
+    if (dx > TOUCH_MOVE_CANCEL_PX || dy > TOUCH_MOVE_CANCEL_PX) {
+      clearTimeout(touchTimerId)
+      touchTimerId = null
+      touchLongPressActive = false
+    }
+  }
+}
+
+const handleTouchEnd = (e) => {
+  if (touchTimerId) {
+    clearTimeout(touchTimerId)
+    touchTimerId = null
+  }
+  if (touchLongPressActive) {
+    // prevent the synthetic click
+    e.preventDefault()
+    e.stopPropagation()
+    touchLongPressActive = false
+    touchCellIdx = -1
+  }
+}
+
+boardAdd.addEventListener('touchstart', handleTouchStart, { passive: false })
+boardAdd.addEventListener('touchmove', handleTouchMove, { passive: false })
+boardAdd.addEventListener('touchend', handleTouchEnd, { passive: false })
 
 // Instructions modal: lazy populate and show
 const instructionHtml = `
@@ -448,12 +605,14 @@ const openInstructions = () => {
     instructionText.innerHTML = instructionHtml
   }
   instructionModal.hidden = false
+  document.body.classList.add('modal-open')
   modalCloseBtn && modalCloseBtn.focus()
 }
 
 const closeInstructions = () => {
   if (!instructionModal) return
   instructionModal.hidden = true
+  document.body.classList.remove('modal-open')
   instructionBtn && instructionBtn.focus()
 }
 
@@ -468,3 +627,38 @@ document.addEventListener('keydown', (e) => {
     closeInstructions()
   }
 })
+
+// Modal accessibility: trap focus and close on Enter/Space on close button
+const isFocusable = (el) => {
+  if (!el) return false
+  if (el.tabIndex >= 0 && !el.disabled && el.offsetParent !== null) return true
+  return false
+}
+
+const trapFocus = (e) => {
+  if (e.key !== 'Tab') return
+  if (!instructionModal || instructionModal.hidden) return
+  const focusables = Array.from(
+    instructionModal.querySelectorAll(
+      'button, [href], [tabindex]:not([tabindex="-1"])'
+    )
+  ).filter(isFocusable)
+  if (focusables.length === 0) return
+  const first = focusables[0]
+  const last = focusables[focusables.length - 1]
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault()
+    last.focus()
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault()
+    first.focus()
+  }
+}
+instructionModal && instructionModal.addEventListener('keydown', trapFocus)
+modalCloseBtn &&
+  modalCloseBtn.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      closeInstructions()
+    }
+  })

@@ -258,6 +258,11 @@ iframe {
   padding: 0.1rem 0.5rem;
 }
 
+/* Prevent body scroll when modal open */
+body.modal-open {
+  overflow: hidden;
+}
+
 /* Respect users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
