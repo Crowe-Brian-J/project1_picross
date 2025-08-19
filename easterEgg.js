@@ -91,7 +91,12 @@ handlePaint = (evt) => {
 
 handleBrush = (evt) => {
   const brushIdx = palettes.indexOf(evt.target)
+  if (brushIdx === -1) return
   brush = brushIdx
+
+  palettes.forEach((p) => p.classList.remove('selected'))
+  evt.target.classList.add('selected')
+
   if (srStatus) srStatus.textContent = `Selected color ${COLORS[brush]}`
   render()
 }

@@ -105,6 +105,23 @@ a, a:visited {
   background-color: white;
 }
 
+.pal.selected {
+  outline: 3px solid #fff;   /* inner border */
+  outline-offset: -3px;
+  box-shadow: 0 0 0 3px #000; /* outer border */
+}
+
+.pal.selected::after {
+  content: "✔";
+  font-size: 1.5vmin;
+  color: #fff;
+  text-shadow:
+    -1px -1px 0 #000,
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000; /* black outline effect */
+}
+
 button {
   font-family: CaveStoryRegular, CaveStory, 'Cave Story', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 3.2vmin;
