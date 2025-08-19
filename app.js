@@ -98,12 +98,15 @@ const renderBoard = () => {
     cellEl.style.backgroundColor = MARKS[arr]
     if (MARKS[arr] === 'rgba(48, 98, 48, 0.5)') {
       cellEl.innerText = 'X'
+      cellEl.classList.add('xmark')
     }
     if (MARKS[arr] !== 'rgba(48, 98, 48, 0.5)') {
       //clears X
       cellEl.innerText = ''
+      cellEl.classList.remove('xmark')
     }
-    const stateLabel = arr === 1 ? 'filled' : (arr === -1 ? 'marked empty' : 'blank')
+    const stateLabel =
+      arr === 1 ? 'filled' : arr === -1 ? 'marked empty' : 'blank'
     cellEl.setAttribute('aria-label', `Cell ${cell + 1} ${stateLabel}`)
   })
 
@@ -406,7 +409,10 @@ newPuzzBtn.addEventListener('click', nextPuzzle)
 
 // Keyboard support for grid interaction
 const handleKeyPlacement = (evt) => {
-  if ((evt.key === 'Enter' || evt.key === ' ') && evt.target.classList.contains('cell')) {
+  if (
+    (evt.key === 'Enter' || evt.key === ' ') &&
+    evt.target.classList.contains('cell')
+  ) {
     evt.preventDefault()
     handlePlacement({ target: evt.target })
   }
@@ -414,6 +420,9 @@ const handleKeyPlacement = (evt) => {
 boardAdd.addEventListener('keydown', handleKeyPlacement)
 
 // Hook up instructions without inline JS
-instructionBtn && instructionBtn.addEventListener('click', () => {
-  alert('The numbers adjacent to each row and column below tell you how many cells should be filled. Click on the individual cells to fill the puzzle. If you are not sure which ones to fill, but can determine which cells not to fill, click MARK BLANK and you can designate an empty cell. Toggle back to MARK FILLED to complete. When you think you are done, click CHECK SOLUTION to verify.')
-})
+instructionBtn &&
+  instructionBtn.addEventListener('click', () => {
+    alert(
+      'The numbers adjacent to each row and column below tell you how many cells should be filled. Click on the individual cells to fill the puzzle. If you are not sure which ones to fill, but can determine which cells not to fill, click MARK BLANK and you can designate an empty cell. Toggle back to MARK FILLED to complete. When you think you are done, click CHECK SOLUTION to verify.'
+    )
+  })

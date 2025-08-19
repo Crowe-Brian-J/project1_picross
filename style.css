@@ -1,3 +1,18 @@
+@import url('https://fontlibrary.org/face/cave-story');
+
+/* Local font (optional but preferred). Place files in /fonts */
+@font-face {
+  font-family: 'CaveStoryRegular';
+  src: local('CaveStoryRegular'), local('Cave Story'),
+       url('./fonts/CaveStoryRegular.woff2') format('woff2'),
+       url('./fonts/CaveStoryRegular.woff') format('woff'),
+       url('./fonts/CaveStoryRegular.ttf') format('truetype'),
+       url('./fonts/Cave-Story.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Media Query */
 /* Need to expand id='#gameboard' on phones/tablets (?) */
 
@@ -7,7 +22,7 @@
 }
 
 body {
-  font-family: 'CaveStoryRegular';
+  font-family: CaveStoryRegular, CaveStory, 'Cave Story', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
   font-weight: normal;
   font-style: normal;
   background-color: #9bbc0f;
@@ -103,8 +118,13 @@ a, a:visited {
   border: 1vmin solid #8bac0f;
 }
 
+.cell.xmark {
+  font-size: 8vmin;
+  line-height: 1;
+}
+
 #check, #reset, #newPuzzle{
-  font-family: 'CaveStoryRegular';
+  font-family: CaveStoryRegular, CaveStory, 'Cave Story', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 3vmin;
   margin-top: 1vmin;
   color:#0f380f;
@@ -134,7 +154,7 @@ button:focus-visible, .cell:focus-visible {
 }
 
 #toggleFilled, #toggleBlank {
-  font-family: 'CaveStoryRegular';
+  font-family: CaveStoryRegular, CaveStory, 'Cave Story', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 3vmin;
   border: 4px outset #306230;
   border-radius: 6px;
@@ -155,7 +175,7 @@ button:focus-visible, .cell:focus-visible {
 }
 
 #instruction {
-  font-family: 'CaveStoryRegular';
+  font-family: CaveStoryRegular, CaveStory, 'Cave Story', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
   font-size: 3vmin;
   color: #306230;
   background-color: #8bac0f;
@@ -218,6 +238,9 @@ iframe {
   }
   .cell {
     font-size: 12vmin;
+  }
+  .cell.xmark {
+    font-size: 9vmin;
   }
 
   /* Prevent clue overflow: make left clues vertical and smaller */
