@@ -444,153 +444,14 @@ const handleRightClick = (evt) => {
   if (winner) return
   if (!(evt.target && evt.target.classList.contains('cell'))) return
   evt.preventDefault()
-  // If a long-press just occurred, ignore the follow-up contextmenu event (mobile)
-  if (Date.now() - lastLongPressAt < 700) return
   const cellIdx = cells.indexOf(evt.target)
   if (cellIdx === -1) return
   // Toggle blank marking with right-click
   board[cellIdx] = board[cellIdx] === -1 ? 0 : -1
   render()
-  // Prevent the subsequent synthetic click from undoing the change
-  suppressNextClick = true
 }
 boardAdd.addEventListener('contextmenu', handleRightClick)
-
-// Long-press on touch to mark blank
-let longPressTimerId = null
-let longPressActive = false
-let longPressCellIdx = -1
-let suppressNextClick = false
-let lastLongPressAt = 0
-
-// Also support touch events explicitly to better control default click behavior
-let touchTimerId = null
-let touchLongPressActive = false
-let touchCellIdx = -1
-let touchStartX = 0
-let touchStartY = 0
-const TOUCH_MOVE_CANCEL_PX = 10
-
-const clearLongPress = () => {
-  if (longPressTimerId) {
-    clearTimeout(longPressTimerId)
-    longPressTimerId = null
-  }
-}
-
-const handlePointerDown = (evt) => {
-  if (winner) return
-  if (evt.pointerType !== 'touch') return
-  const targetCell =
-    evt.target && evt.target.classList && evt.target.classList.contains('cell')
-      ? evt.target
-      : null
-  if (!targetCell) return
-  const cellIdx = cells.indexOf(targetCell)
-  if (cellIdx === -1) return
-  clearLongPress()
-  longPressActive = false
-  longPressCellIdx = cellIdx
-  longPressTimerId = setTimeout(() => {
-    longPressActive = true
-  }, 500)
-}
-
-const handlePointerUpOrCancel = () => {
-  if (longPressTimerId) {
-    clearLongPress()
-  }
-  if (longPressActive) {
-    if (longPressCellIdx !== -1) {
-      board[longPressCellIdx] = board[longPressCellIdx] === -1 ? 0 : -1
-      render()
-      lastLongPressAt = Date.now()
-    }
-    suppressNextClick = true
-  }
-  longPressActive = false
-  longPressCellIdx = -1
-}
-
-boardAdd.addEventListener('pointerdown', handlePointerDown)
-boardAdd.addEventListener('pointerup', handlePointerUpOrCancel)
-boardAdd.addEventListener('pointercancel', handlePointerUpOrCancel)
-boardAdd.addEventListener('pointerleave', handlePointerUpOrCancel)
-
-// Suppress click after a long-press
-const originalHandlePlacement = handlePlacement
-const handlePlacementWrapped = (evt) => {
-  if (suppressNextClick) {
-    suppressNextClick = false
-    return
-  }
-  originalHandlePlacement(evt)
-}
-document.getElementById('board').removeEventListener('click', handlePlacement)
-document
-  .getElementById('board')
-  .addEventListener('click', handlePlacementWrapped)
-
-// Touch-based long-press (for browsers with limited PointerEvent behavior)
-const findCellFromTouch = (touch) => {
-  const el = document.elementFromPoint(touch.clientX, touch.clientY)
-  if (!el) return -1
-  if (el.classList && el.classList.contains('cell')) {
-    return cells.indexOf(el)
-  }
-  return -1
-}
-
-const handleTouchStart = (e) => {
-  if (winner) return
-  if (!e.touches || e.touches.length !== 1) return
-  const touch = e.touches[0]
-  touchCellIdx = findCellFromTouch(touch)
-  if (touchCellIdx === -1) return
-  touchStartX = touch.clientX
-  touchStartY = touch.clientY
-  touchLongPressActive = false
-  if (touchTimerId) clearTimeout(touchTimerId)
-  touchTimerId = setTimeout(() => {
-    touchLongPressActive = true
-    // Toggle blank on threshold
-    board[touchCellIdx] = board[touchCellIdx] === -1 ? 0 : -1
-    render()
-    lastLongPressAt = Date.now()
-    suppressNextClick = true
-  }, 500)
-}
-
-const handleTouchMove = (e) => {
-  if (touchTimerId && e.touches && e.touches.length === 1) {
-    const t = e.touches[0]
-    const dx = Math.abs(t.clientX - touchStartX)
-    const dy = Math.abs(t.clientY - touchStartY)
-    if (dx > TOUCH_MOVE_CANCEL_PX || dy > TOUCH_MOVE_CANCEL_PX) {
-      clearTimeout(touchTimerId)
-      touchTimerId = null
-      touchLongPressActive = false
-    }
-  }
-}
-
-const handleTouchEnd = (e) => {
-  if (touchTimerId) {
-    clearTimeout(touchTimerId)
-    touchTimerId = null
-  }
-  if (touchLongPressActive) {
-    // prevent the synthetic click
-    e.preventDefault()
-    e.stopPropagation()
-    touchLongPressActive = false
-    touchCellIdx = -1
-  }
-}
-
-boardAdd.addEventListener('touchstart', handleTouchStart, { passive: false })
-boardAdd.addEventListener('touchmove', handleTouchMove, { passive: false })
-boardAdd.addEventListener('touchend', handleTouchEnd, { passive: false })
+boardAdd.addEventListener('click', handlePlacement)
 
 // Instructions modal: lazy populate and show
 const instructionHtml = `
@@ -662,3 +523,20 @@ modalCloseBtn &&
       closeInstructions()
     }
   })
+
+// Scale the game wrapper to fit viewport
+const wrapper = document.getElementById('game-wrapper')
+
+const scaleToFit = () => {
+  const vh = window.innerHeight
+  const headerHeight = document.querySelector('header').offsetHeight
+  const wrapperHeight = wrapper.scrollHeight
+  const scale = Math.min(1, vh / wrapperHeight)
+  wrapper.style.transform = `scale(${scale})`
+}
+
+// Call once on load
+scaleToFit()
+
+// Recalculate on window resize
+window.addEventListener('resize', scaleToFit)
