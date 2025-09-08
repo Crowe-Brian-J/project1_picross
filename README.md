@@ -1,10 +1,21 @@
 # **_Picross/Nonograms_**
 
+## Original Work
 ## 4 May 2023 - 12 May 2023
 
 ### by Brian Crowe
 
 [Want to play a game?](http://economic-balance.surge.sh)
+---
+## Update
+## 7 September 2025
+
+**_Updated_**
+PiColors Easter Egg - Now drags and indicates selected color
+Check Solution - Now with hints
+User can now right-click to mark blank
+Update CSS
+Update Accessibility
 
 ---
 
