@@ -7,15 +7,14 @@
 
 [Want to play a game?](http://economic-balance.surge.sh)
 ---
-## Update
+## **_Update_**
 ## 7 September 2025
 
-**_Updated_**
-PiColors Easter Egg - Now drags and indicates selected color
-Check Solution - Now with hints
-User can now right-click to mark blank
-Update CSS
-Update Accessibility
+PiColors Easter Egg - Now drags and indicates selected color  
+Check Solution - Now with hints  
+User can now right-click to mark blank  
+Update CSS  
+Update Accessibility  
 
 ---
 
