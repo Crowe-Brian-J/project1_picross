@@ -7,8 +7,7 @@
 
 [Want to play a game?](http://economic-balance.surge.sh)
 ---
-## **_Update_**
-## 7 September 2025
+## **_Update 7 September 2025_**
 
 PiColors Easter Egg - Now drags and indicates selected color  
 Check Solution - Now with hints  
